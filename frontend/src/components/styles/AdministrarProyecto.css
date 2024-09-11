@@ -1,0 +1,135 @@
+.Plataforma {
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;  /*Ajustamos a flex start*/
+    font-size: calc(10px + 2vmin);
+}
+
+.Elemento {
+    /*Ubicamos mediante un flexbox, la posición de cada uno de los objetos */
+    display: flex;
+    margin: 10px;
+    padding: 10px 0;
+}
+
+.Elemento label{
+    color: white;
+    margin-bottom: 20px;
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.Section {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.Elemento .Tareas{
+    display: flex;
+    align-items: center;
+}
+
+.Elemento .Tareas span {
+    flex-grow: 1;
+    font-size: 24px;
+    padding: 10px;
+    background-color: white;
+    border-radius: 8px;
+    text-align: left;
+    align-items: center;
+}
+
+.Elemento .Tareas span:hover {
+    background-color: #9999ad;
+    border-radius: 8px;
+    border-bottom: 4px;
+    cursor: pointer;
+}
+
+.Elemento .Tareas button{
+    background-color: transparent;
+    border: #282c34;
+    border-radius: 30px;
+    cursor: pointer;
+    margin: 0px 15px;
+    color: #121214;
+    width: fit-content;
+}
+
+.Elemento .Tareas button svg{
+    font-size: 30px;
+}
+
+.Elemento .Tareas button:hover{
+    /*Si se deja presionado el botón se muestra*/
+    background-color: #f0f0fa;
+    color: #222233;
+}
+
+.Elemento .Member {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.Elemento .Member span {
+    flex-grow: 1;
+    font-size: 20px;
+    padding: 10px;
+    background-color: white;
+    border-radius: 8px;
+    text-align: left;
+}
+
+.Elemento .Member button{
+    background-color: transparent;
+    border: #282c34;
+    border-radius: 30px;
+    cursor: pointer;
+    margin: 0px 15px;
+    color: red;
+    width: fit-content;
+}
+
+.Elemento .Member button svg{
+    font-size: 36px;
+}
+
+.Elemento .Member .supervisor-icon {
+    margin-left: 10px;
+    font-size: 24px;
+    color: blue;
+}
+
+.Elemento .Member button:hover{
+    /*Si se deja presionado el botón se muestra*/
+    background-color: #ede6e4;
+    color: #f05c37;
+}
+
+.Elemento button {
+    /*En el caso que el botón como tal no funcione*/
+    background-color: #f72585;
+    border: none;
+    letter-spacing: 2px; /*Este atributo se encarga de espaciar las letras*/
+    text-transform: uppercase; /*transforma el texto a todo mayúscula*/
+    cursor: pointer; /*Cuando ponemos el cursor en el botón, va a simular el botón*/
+    padding: 15px;
+    border-radius: 18px;
+    font-size: 20px;
+    border-bottom: 1px solid white; /*Primero quitamos el borde a todo, luego se lo creamos solo en el bottom o lado inferior*/
+    color: white;
+    
+    width: 400px;
+    margin: 0 auto;
+    display: block;
+}
+
+.Elemento button:hover{
+    /*Si se deja presionado el botón se muestra*/
+    background-color: #d23669;
+}

@@ -1,0 +1,108 @@
+.App-content {
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+}
+
+.Form {
+    /*Decorando el cuadro que contiene el formulario y el título*/
+    margin: 50px auto;
+    width: 450px;
+    padding: 30px;
+    background: rgba(0, 0, 0, .5);
+    border-radius: 10px; /*Redondea las esquinas del borde por la cantidad de pixeles*/
+}
+
+.Form .Elemento {
+    /*Ubicamos mediante un flexbox, la posición de cada uno de los objetos */
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+}
+
+.Form .Elemento label{
+    /*Se modifican los label que se encuentren dentro de un div clase elemento, dentro de un div clase contenedor*/
+    color: white;
+    margin-bottom: 10px;
+    text-align: left;
+    font-size: 20px;
+}
+
+
+.Form .Elemento .Titulo{
+    /*Sección inicial de iniciar sesión título*/
+    color: white;
+    text-align: center;
+    margin-bottom: 70px;
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.Form .Elemento input{
+    /*Se modifican los input que se encuentren dentro de un div clase elemento, dentro de un div clase contenedor*/    
+    width: 100%;
+    padding: 10px 0;
+    color: white;
+    background: transparent; /*Hacemos que el color sea transparente*/
+    border: none;
+    border-bottom: 1px solid white; /*Primero quitamos el borde a todo, luego se lo creamos solo en el bottom o lado inferior*/
+    margin-bottom: 30px; /*Un margen de 30 px en el lado inferior*/
+    font-size: 20px;
+}
+
+.Form .Elemento a {
+    color: white;
+    font-size: 20px;
+    margin-bottom: 16px;
+}
+
+.Form .Elemento button {
+    /*En el caso que el botón como tal no funcione*/
+    background-color: #f72585;
+    border: none;
+    letter-spacing: 2px; /*Este atributo se encarga de espaciar las letras*/
+    text-transform: uppercase; /*transforma el texto a todo mayúscula*/
+    cursor: pointer; /*Cuando ponemos el cursor en el botón, va a simular el botón*/
+    padding: 15px;
+    border-radius: 18px;
+    font-size: 20px;
+    border-bottom: 1px solid white; /*Primero quitamos el borde a todo, luego se lo creamos solo en el bottom o lado inferior*/
+    color: white;
+    
+    width: 250px;
+    margin: 0 auto;
+    display: block;
+}
+
+.Form .Elemento .password-input{
+    position: relative;
+    width: 100%;
+    overflow-x: auto; /*Permite scrolling horizontal*/
+    border-bottom: 1px solid white; /*Primero quitamos el borde a todo, luego se lo creamos solo en el bottom o lado inferior*/
+    margin-bottom: 30px; /*Un margen de 30 px en el lado inferior*/
+    background: transparent; /*Hacemos que el color sea transparente*/
+}
+
+.Form .Elemento .password-input input{
+    /*Se modifican los input que se encuentren dentro de un div clase elemento, dentro de un div clase contenedor*/    
+    width: 90%;
+    padding: 10px 0;
+    color: white;
+    background: transparent; /*Hacemos que el color sea transparente*/
+    border: none;
+    font-size: 20px;
+    margin-bottom: 0px;
+}
+
+.eye-icon{
+    position: absolute;
+    right: 10px;
+    transform: translateY(-10%);
+    cursor: pointer;
+    color: #ccc;
+}
+

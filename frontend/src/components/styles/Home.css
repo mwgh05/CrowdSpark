@@ -1,0 +1,45 @@
+/*Sección inical donde se muestra todo lo necesario para proyectos*/
+.Home {
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-size: calc(10px + 2vmin);
+}
+
+.Opciones {
+    margin-top: calc(12px + 1.5vmin);
+    background-color: #fdfdfd;  /*Tab de color blanco*/
+    padding: 20px; /*Espaciado de objetos*/
+    border-radius: 4px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.Opciones > div {
+    justify-content: space-between;
+    align-items: center;
+    display: flex;
+}
+
+.Opciones div label {
+    font-size: 34px;
+    margin-left: 30px;
+    padding-left: 30px;
+}
+
+.Opciones button {
+    background-color: #657E86;
+    padding: 14px;
+    border-radius: 14px;
+    font-size: 20px;
+    margin: 0 30px;
+}
+
+.Opciones div img {
+    width: 125px;
+    height: 80px;
+    padding: 8px;
+}
