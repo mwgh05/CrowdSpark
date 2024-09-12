@@ -1,0 +1,16 @@
+Primero, para usar este sistema requerimos tener un node.js
+
+Luego, instalar la librería create-react-app que mantiene el grupo de Facebook
+
+A la hora de cambiar de pestañas o mejor dicho, pantallas, tenemos que importar un
+archivo en específico:
+
+$ npm install (i) react-router-dom
+
+Si deseamos ejecutar el programa como tal debemos de presionar el comando:
+
+$ npm start //Dentro de la carpeta de front end
+
+Otra cosa, también requeriremos instalar otra librería llamadas axios dentro del frontend
+
+$ npm install (i) axios

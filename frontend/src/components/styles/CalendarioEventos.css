@@ -1,0 +1,173 @@
+.Plataforma {
+    background-color: #282c34;
+    min-height: 120vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;  /*Ajustamos a flex start*/
+    font-size: calc(10px + 2vmin);
+}
+
+/*Sección de tabla de arriba*/
+.Tab {
+    position: fixed;  /*Centramos la posición inicial*/
+    top: 0;           /*Lo colocamos al top de la imagen*/
+    width: 100%;      /*Cubre todo el ancho*/
+    background-color: #fdfdfd;  /*Tab de color blanco*/
+    padding: 20px;    /*Espaciado de objetos*/
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 1;       /*Es ubicado sobre todo el contenido*/
+}
+
+.Tab > div {
+    /*justify-content: space-between;*/
+    align-items: center;
+    display: flex;
+}
+
+.Tab div label {
+    font-size: 34px;
+    margin-left: 30px;
+    /*padding-left: 30px;*/
+}
+
+.Tab div img {
+    width: 125px;
+    height: 80px;
+    padding: 8px;
+}
+
+.Tab button {
+    background-color: #657E86;
+    padding: 14px;
+    border-radius: 14px;
+    font-size: 20px;
+    margin: 0 30px;
+}
+
+
+/*Formas para modificar el diseño de calendario*/
+.Calendario {
+    margin-top: 200px;
+    width: 80%;
+    background-color: #b5b5b3;
+    height: fit-content;
+    border-radius: 10px;
+    padding: 10px 20px;
+}
+
+.input-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.input-container label {
+    margin-right: 10px;
+}
+
+.select-container, .slider-container{
+    display: flex;
+    align-items: center;
+}
+
+.select-container{
+    flex-grow: 1; /* Allow the select container to grow and occupy available space */
+    margin-right: 10px; /* Adjust margin between select and slider */
+}
+
+/*Estilos para el elemento select*/
+.select-container select{
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    outline: none;  /* Elimina el borde azul predeterminado en enfoque */
+    transition: border-color 0.2s ease-in-out; /* Agrega una transición suave al cambiar el color del borde */
+    margin: 0px 0px 0px 20px; /* Agrega un espacio en la parte inferior */
+    width: 70%;
+    align-items: center;
+}
+
+/*Estilos para el select está enfocado*/
+.select-container select:focus{
+    border-color: #5f9ea0;   /* Cambia el color del borde al enfocar */
+}
+
+.slider-container {
+    display: flex;
+    align-items: center;
+}
+
+.slider-container label {
+    margin-right: 10px;
+}
+
+.slider-container input[type="range"] {
+    width: 150px;
+}
+
+/*
+.slider-value {
+    /*Éste valor debe de seguir la línea como tal, por lo tanto ocuparemos que siga la posición vertical
+    position: absolute;
+    top: -30px;
+    left: calc(70px * (var(--value) / 10) -10px); /*Ajustar posición horizontal
+    background-color: white;
+    padding: 5px;
+    border-radius: 18px;
+    z-index: 1; /*Asegurar que el número está encima del slider
+}*/
+
+/*Estilos para eventos de calendario*/
+.fc-event{
+    overflow: hidden;
+    text-overflow: ellipsis; /*Agregamos una ellipsis al texto que sobrepase linea*/
+    white-space: wrap; /*Prevenimos al texto de hacer wrap*/
+    height: auto !important; /*Asignamos altura a importante*/
+    padding: 5px;
+    margin-bottom: 5px;
+    background-color: #c4c4ad;
+    border-radius: 20px;
+}
+
+.fc-daygrid-day-events{
+    width: fit-content;
+}
+
+.fc-daygrid-event-harness{
+    overflow: hidden;
+    white-space: wrap; /*Prevenimos al texto de hacer wrap*/
+    height: auto !important; /*Asignamos altura a importante*/
+    padding: 5px;
+    margin-bottom: 5px;
+    color: black;
+}
+
+.fc-event-today{
+    border: none;
+    background-color: #c4c4ad;
+    border-radius: 20px;
+}
+
+.fc-event-main b{
+    color: black;
+}
+
+.fc-event-main p{
+    color: black;
+}
+
+.fc-daygrid-day-frame{
+    background-color: #b5b5b3; /*#c7c78f*/
+}
+
+.fc-event-today:hover{
+    background-color: #a8a896;
+}

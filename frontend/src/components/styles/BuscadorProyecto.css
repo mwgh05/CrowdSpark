@@ -1,0 +1,111 @@
+.Plataforma {
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;  /*Ajustamos a flex start*/
+    font-size: calc(10px + 2vmin);
+}
+
+/*Sección de tabla de arriba*/
+.Tab {
+    position: fixed;  /*Centramos la posición inicial*/
+    top: 0;           /*Lo colocamos al top de la imagen*/
+    width: 100%;      /*Cubre todo el ancho*/
+    background-color: #fdfdfd;  /*Tab de color blanco*/
+    padding: 20px;    /*Espaciado de objetos*/
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 1;       /*Es ubicado sobre todo el contenido*/
+}
+
+.Tab > div {
+    /*justify-content: space-between;*/
+    align-items: center;
+    display: flex;
+}
+
+.Tab div label {
+    font-size: 34px;
+    margin-left: 30px;
+    /*padding-left: 30px;*/
+}
+
+.Tab div img {
+    width: 125px;
+    height: 80px;
+    padding: 8px;
+}
+
+.Tab button {
+    background-color: #657E86;
+    padding: 14px;
+    border-radius: 14px;
+    font-size: 20px;
+    margin: 0 30px;
+}
+
+/*Sección de buscador normal*/
+.Buscador {
+    display: flex;
+    flex-direction: column;              /*Ajustado como fila*/
+    justify-content: center;      /*Alineamos hacia la derecha*/
+    margin-top: 160px;        /*Hacemos un push hacia abajo*/
+}
+
+.Buscador h2{
+    font: bold message-box;
+    color: #fff;
+}
+
+.Buscador input[type="text"] {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 22px;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+
+/*Parte para mostrar los datos como tal*/
+.Mostrador {
+    display: flex;
+    flex-direction: row;              /*Ajustado como fila*/
+    justify-content: flex-start;      /*Alineamos hacia la derecha*/
+    margin-top: 20px;        /*Hacemos un push hacia abajo*/
+    width: 95%;
+}
+
+.Mostrador ul{
+    list-style: none;
+    padding: 0;
+    /*display: flex;    Cambiamos el display de las opciones a flex*/
+    /*flex-direction: column; Cambiamos la dirección de los nuevos objetos a columna*/
+    /*align-items: flex-end; Alineamos a la derecha*/
+    min-width: 40%;
+}
+
+.Mostrador ul li{
+    margin-bottom: 40px;
+    width: 100%;
+}
+
+.Mostrador ul li a{
+    text-decoration: none;
+    color: #fff;
+    display: block;
+    /*width: 100%; Hacemos que los links span cubran toda la pantalla*/
+    padding: 10px;
+    background-color: #657E86;
+    border-radius: 8px;
+    text-align: left;
+}
+
+.Mostrador ul li a:hover{
+    text-decoration: underline;
+    background-color: #546b76;
+}
