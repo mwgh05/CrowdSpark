@@ -63,5 +63,14 @@ public class Principal extends AppCompatActivity {
             }
         });
 
+        Button botonHistorial = findViewById(R.id.historial);
+        botonHistorial.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Principal.this, Historial.class);
+                startActivity(intent);
+            }
+        });
+
     }
 }

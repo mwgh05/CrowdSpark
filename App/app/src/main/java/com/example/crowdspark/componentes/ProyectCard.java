@@ -1,6 +1,9 @@
 package com.example.crowdspark.componentes;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +12,9 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.crowdspark.R;
+import com.example.crowdspark.ventanas.DetalleProyecto;
+import com.example.crowdspark.ventanas.Formulario;
+import com.example.crowdspark.ventanas.Principal;
 
 public class ProyectCard extends AppCompatActivity {
     private String imgurl;
@@ -80,6 +86,7 @@ public class ProyectCard extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_proyect_card);
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
