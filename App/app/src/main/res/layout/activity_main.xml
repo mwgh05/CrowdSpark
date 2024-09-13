@@ -68,6 +68,7 @@
         android:ems="10"
         android:hint="email@ejemplo.com"
         android:inputType="textEmailAddress"
+        android:textColor="#595959"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -80,6 +81,7 @@
         android:ems="10"
         android:hint="Password"
         android:inputType="textPassword"
+        android:textColor="#595959"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

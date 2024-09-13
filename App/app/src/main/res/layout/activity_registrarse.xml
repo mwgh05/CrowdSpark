@@ -36,30 +36,17 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="195dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="211dp"
-        android:layout_marginEnd="58dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="nombre" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="195dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="264dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="204dp"
         android:layout_marginEnd="56dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:hint="000000000" />
+            android:layout_height="wrap_content"
+            android:hint="nombre"
+            android:textColor="#595959" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
@@ -93,6 +80,7 @@
         android:ems="10"
         android:hint="0000000"
         android:inputType="numberDecimal"
+        android:textColor="#595959"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -116,6 +104,7 @@
         android:ems="10"
         android:hint="00000000"
         android:inputType="phone"
+        android:textColor="#595959"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -165,6 +154,7 @@
         android:ems="10"
         android:hint="password"
         android:inputType="textPassword"
+        android:textColor="#595959"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -177,6 +167,7 @@
         android:ems="10"
         android:hint="email@ejemplo.com"
         android:inputType="textEmailAddress"
+        android:textColor="#595959"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -205,8 +196,8 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="195dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="364dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="360dp"
         android:layout_marginEnd="56dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -214,7 +205,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="area" />
+            android:hint="area"
+            android:textColor="#595959" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <EditText
@@ -226,6 +218,7 @@
         android:ems="10"
         android:hint="password"
         android:inputType="textPassword"
+        android:textColor="#595959"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -250,6 +243,19 @@
         android:contentDescription="Go back"
         android:src="?attr/homeAsUpIndicator"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextNumber"
+        android:layout_width="196dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="265dp"
+        android:layout_marginEnd="57dp"
+        android:ems="10"
+        android:hint="000000000"
+        android:inputType="number"
+        android:textColor="#595959"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

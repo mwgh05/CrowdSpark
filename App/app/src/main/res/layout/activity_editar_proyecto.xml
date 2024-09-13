@@ -35,8 +35,8 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="184dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="264dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="248dp"
         android:layout_marginEnd="44dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -44,21 +44,23 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="nombre" />
+            android:hint="nombre"
+            android:textColor="#595959" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="195dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="324dp"
-        android:layout_marginEnd="48dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="308dp"
+        android:layout_marginEnd="44dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="descripcion" />
+            android:hint="descripcion"
+            android:textColor="#595959" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
@@ -92,6 +94,7 @@
         android:ems="10"
         android:hint="0000000"
         android:inputType="numberDecimal"
+        android:textColor="#595959"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -154,16 +157,17 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="195dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="424dp"
-        android:layout_marginEnd="48dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="420dp"
+        android:layout_marginEnd="44dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="categoria" />
+            android:hint="categoria"
+            android:textColor="#595959" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <ImageButton
@@ -182,8 +186,9 @@
         android:id="@+id/datePicker"
         android:layout_width="200dp"
         android:layout_height="87dp"
-        android:layout_marginTop="472dp"
-        android:layout_marginEnd="47dp"
+        android:layout_marginTop="488dp"
+        android:layout_marginEnd="44dp"
+        android:calendarTextColor="#595959"
         android:calendarViewShown="false"
         android:datePickerMode="spinner"
         android:spinnersShown="true"
@@ -195,7 +200,7 @@
         android:layout_width="202dp"
         android:layout_height="48dp"
         android:layout_marginStart="181dp"
-        android:layout_marginTop="208dp"
+        android:layout_marginTop="200dp"
         android:layout_marginEnd="28dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

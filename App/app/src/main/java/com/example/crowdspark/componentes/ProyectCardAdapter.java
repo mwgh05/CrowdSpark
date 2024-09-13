@@ -8,13 +8,15 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import android.content.Intent;
 import androidx.annotation.NonNull;
 
 //import com.example.crowdspark.R;
 import com.example.crowdspark.R;
+import com.example.crowdspark.ventanas.DetalleProyecto;
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -42,6 +44,7 @@ public class ProyectCardAdapter extends ArrayAdapter<ProyectCard> {
         TextView monto;
         TextView objetivo;
         ImageView image;
+        Button detalle;
     }
 
     /**
@@ -72,6 +75,7 @@ public class ProyectCardAdapter extends ArrayAdapter<ProyectCard> {
         String imgUrl = getItem(position).getImgurl();
 
 
+
         try{
 
 
@@ -91,6 +95,15 @@ public class ProyectCardAdapter extends ArrayAdapter<ProyectCard> {
                 holder.monto = (TextView) convertView.findViewById(R.id.monto);
                 holder.objetivo = (TextView) convertView.findViewById(R.id.objetivo);
                 holder.image = (ImageView) convertView.findViewById(R.id.image);
+                holder.detalle = (Button) convertView.findViewById(R.id.detalle);
+
+                holder.detalle.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(mContext, DetalleProyecto.class);
+                        mContext.startActivity(intent);
+                    }
+                });
 
                 result = convertView;
 
