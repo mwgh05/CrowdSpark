@@ -6,13 +6,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
-import com.example.crowdspark.MainActivity;
 import com.example.crowdspark.R;
 import com.example.crowdspark.componentes.ProyectCard;
 import com.example.crowdspark.componentes.ProyectCardAdapter;

@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.crowdspark.admin.PrincipalAdmin;
 import com.example.crowdspark.ventanas.Principal;
 import com.example.crowdspark.ventanas.Registrarse;
 
@@ -32,6 +33,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, Principal.class);
+                startActivity(intent);
+            }
+        });
+
+        Button botonAdmin = findViewById(R.id.admin);
+        botonAdmin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, PrincipalAdmin.class);
                 startActivity(intent);
             }
         });

@@ -1,9 +1,7 @@
-package com.example.crowdspark.ventanas;
+package com.example.crowdspark.admin;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ImageButton;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,21 +9,23 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import android.view.View;
+import android.widget.ImageButton;
 import com.example.crowdspark.R;
 
-public class Donacion extends AppCompatActivity {
+public class Usuarios extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_donacion);
+        setContentView(R.layout.activity_usuarios);
 
         ImageButton botonAtras = findViewById(R.id.back);
         botonAtras.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Donacion.this, Principal.class);
+                Intent intent = new Intent(Usuarios.this, PrincipalAdmin.class);
                 startActivity(intent);
             }
         });
