@@ -1,5 +1,6 @@
 package com.example.crowdspark.ventanas;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -19,16 +20,37 @@ import java.util.Calendar;
 
 public class Formulario extends AppCompatActivity {
 
+    private Button dateButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_formulario);
 
-        DatePicker datePicker = findViewById(R.id.datePicker);
-        Calendar calendar = Calendar.getInstance();
-        datePicker.setMinDate(calendar.getTimeInMillis());
+        dateButton = findViewById(R.id.dateButton);
+        dateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar c = Calendar.getInstance();
+                int mYear = c.get(Calendar.YEAR);
+                int mMonth = c.get(Calendar.MONTH);
+                int mDay = c.get(Calendar.DAY_OF_MONTH);
 
+                DatePickerDialog datePickerDialog = new DatePickerDialog(Formulario.this,
+                        new DatePickerDialog.OnDateSetListener() {
+
+                            @Override
+                            public void onDateSet(DatePicker view, int year,
+                                                  int monthOfYear, int dayOfMonth) {
+
+                                dateButton.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+
+                            }
+                        }, mYear, mMonth, mDay);
+                datePickerDialog.show();
+            }
+        });
         ImageButton botonAtras = findViewById(R.id.back);
         botonAtras.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -13,6 +13,21 @@
         android:theme="@style/Theme.CrowdSpark"
         tools:targetApi="31">
         <activity
+            android:name=".admin.DetalleProyectoAdmin"
+            android:exported="false" />
+        <activity
+            android:name=".admin.Usuarios"
+            android:exported="false" />
+        <activity
+            android:name=".admin.Donaciones"
+            android:exported="false" />
+        <activity
+            android:name=".admin.Estadisticas"
+            android:exported="false" />
+        <activity
+            android:name=".admin.PrincipalAdmin"
+            android:exported="false" />
+        <activity
             android:name=".ventanas.Historial"
             android:exported="false" />
         <activity
