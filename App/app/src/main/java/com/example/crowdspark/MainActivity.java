@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.crowdspark.admin.PrincipalAdmin;
 import com.example.crowdspark.ventanas.Principal;
@@ -32,8 +34,22 @@ public class MainActivity extends AppCompatActivity {
         botonIngresar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, Principal.class);
-                startActivity(intent);
+                EditText correoText = findViewById(R.id.editTextTextEmailAddress2);
+                String correo = correoText.getText().toString();
+                EditText passwordText = findViewById(R.id.editTextTextPassword3);
+                String password = passwordText.getText().toString();
+
+
+                if(correo.equals("") && password.equals("") ){
+                    Intent intent = new Intent(MainActivity.this, Principal.class);
+                    startActivity(intent);
+                } else {
+                    CharSequence text = "Correo o contraseña erronea";
+                    int duration = Toast.LENGTH_SHORT;
+                    Toast toast = Toast.makeText(v.getContext(), text, duration);
+                    toast.show();
+                }
+
             }
         });
 
