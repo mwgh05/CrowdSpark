@@ -89,6 +89,8 @@ public class Registrarse extends AppCompatActivity {
                     CorreoService correoService = new CorreoService();
                     FireBaseConnection firebase = new FireBaseConnection();
                     firebase.registrar(correo,password,nombre,area,cedula,dinero,telefono,Registrarse.this);
+
+
                     //correoService.enviarCorreo(correo,"Usuario Registrado","Bienvenido a CrowdSpark "+nombre ,v.getContext());
                     //
 

@@ -17,14 +17,24 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.ktx.Firebase;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import android.util.Log;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import android.os.Bundle;
+import android.util.Log;
+import androidx.annotation.NonNull;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class FireBaseConnection {
-    FirebaseFirestore mFirestore;
-
+    private FirebaseFirestore mFirestore;
+    private static final String TAG = "FirestoreExample";
     public FireBaseConnection() {
         this.mFirestore = FirebaseFirestore.getInstance();
     }
@@ -45,6 +55,8 @@ public class FireBaseConnection {
             @Override
             public void onSuccess(DocumentReference documentReference) {
                 desplegarMensaje("Usuario registrado", context);
+                Intent intent = new Intent(context, MainActivity.class);
+                context.startActivity(intent);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -71,8 +83,7 @@ public class FireBaseConnection {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()){
-                                Intent intent = new Intent(context, MainActivity.class);
-                                context.startActivity(intent);
+
                                 desplegarMensaje("Usuario registrado", context);
                             }
                             else {desplegarMensaje("No se ha podido registrar al usuario", context);}
@@ -85,6 +96,30 @@ public class FireBaseConnection {
         });
 
  */
+
+    }
+    public void leerDatos(Context context){
+        mFirestore.collection("Usuarios")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        // El resultado de la consulta es un objeto QuerySnapshot
+                        QuerySnapshot querySnapshot = task.getResult();
+
+                        // Iterar sobre cada documento en QuerySnapshot
+                        for (QueryDocumentSnapshot document : querySnapshot) {
+                            // Usamos el objeto QueryDocumentSnapshot para acceder a los datos del documento
+                            String id = document.getId(); // Obtener el ID del documento
+                            String nombre = document.getString("nombre"); // Obtener el campo "nombre"
+                            String correo = document.getString("correo"); // Obtener el campo "correo"
+
+                            // Mostrar los datos obtenidos en Logcat
+                            desplegarMensaje(", Nombre: " + nombre + ", Correo: " + correo,context);
+                        }
+                    } else {
+                        Log.w(TAG, "Error al obtener documentos.", task.getException());
+                    }
+                });
 
     }
     private  void desplegarMensaje(CharSequence text, Context context){

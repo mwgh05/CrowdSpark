@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.crowdspark.admin.PrincipalAdmin;
+import com.example.crowdspark.control.FireBaseConnection;
 import com.example.crowdspark.ventanas.Principal;
 import com.example.crowdspark.ventanas.Registrarse;
 
@@ -20,7 +21,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        FireBaseConnection firebase = new FireBaseConnection();
+        firebase.leerDatos(this);
         Button botonRegistrar = findViewById(R.id.button2);
         botonRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override
