@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "252950072012",
+    "project_id": "crowdspark-a78a9",
+    "storage_bucket": "crowdspark-a78a9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:252950072012:android:a12daa1debd83d19b8d069",
+        "android_client_info": {
+          "package_name": "com.cs.crowdspark"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCdHMFjTAIDedRJaqHTQ5JwdDFllXE27k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
