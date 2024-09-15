@@ -24,6 +24,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.bumptech.glide.Glide;
 import com.example.crowdspark.R;
 
 import java.util.Calendar;
@@ -42,6 +43,16 @@ public class EditarProyecto extends AppCompatActivity {
         imagen = findViewById(R.id.imagenProyecto2);
         dateButton = findViewById(R.id.dateButton);
 
+
+        /*
+        // Cargar la imagen usando Glide
+        Glide.with(this)
+                .load(urlImagen)
+                .placeholder(R.drawable.circle) // Imagen temporal mientras carga (opcional)
+                .error(R.drawable.image_failed)            // Imagen de error si falla (opcional)
+                .into(imagen);
+
+         */
         /*Petición de permisos*/
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
