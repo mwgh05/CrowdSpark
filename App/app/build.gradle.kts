@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.androidApplication)
+    alias(libs.plugins.googleGmsGoogleServices)
 }
 
 android {
@@ -32,10 +33,20 @@ android {
     buildFeatures {
         viewBinding = true
     }
+    packagingOptions {
+        exclude ("META-INF/NOTICE.md")
+        exclude ("META-INF/LICENSE.md")
+
+    }
 }
 
 dependencies {
+
+    implementation ("com.sun.mail:android-mail:1.6.7")
+    implementation ("com.sun.mail:android-activation:1.6.7")
     implementation("com.github.bumptech.glide:glide:4.15.1")
+    implementation(libs.firebase.auth)
+    implementation(libs.firebase.firestore)
     annotationProcessor("com.github.bumptech.glide:compiler:4.15.1")
     implementation(libs.appcompat)
     implementation(libs.material)

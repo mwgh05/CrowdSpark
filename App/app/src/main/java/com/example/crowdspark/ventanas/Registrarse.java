@@ -1,12 +1,15 @@
 package com.example.crowdspark.ventanas;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -16,9 +19,24 @@ import android.widget.Toast;
 
 import com.example.crowdspark.MainActivity;
 import com.example.crowdspark.R;
+import com.example.crowdspark.control.CorreoService;
+import com.example.crowdspark.control.FireBaseConnection;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Registrarse extends AppCompatActivity {
+    FirebaseAuth mAuth;
+    FirebaseFirestore mFirestore;
     private  void desplegarMensaje(CharSequence text){
         int duration = Toast.LENGTH_SHORT;
         Toast toast = Toast.makeText(this, text, duration);
@@ -68,7 +86,17 @@ public class Registrarse extends AppCompatActivity {
                 } else if(!password2.equals(password)){
                     desplegarMensaje("Las contraseñas deben ser iguales");
                 } else {
-                    desplegarMensaje("Usuario registrado");
+                    CorreoService correoService = new CorreoService();
+                    FireBaseConnection firebase = new FireBaseConnection();
+                    firebase.registrar(correo,password,nombre,area,cedula,dinero,telefono,Registrarse.this);
+                    //correoService.enviarCorreo(correo,"Usuario Registrado","Bienvenido a CrowdSpark "+nombre ,v.getContext());
+                    //
+
+
+
+
+                    /*
+
                     correoText.setText("");
                     cedulaText.setText("");
                     nombreText.getEditText().setText("");
@@ -77,6 +105,9 @@ public class Registrarse extends AppCompatActivity {
                     telefonoText.setText("");
                     passwordText.setText("");
                     password2Text.setText("");
+
+                     */
+
                 }
 
             }
@@ -86,5 +117,8 @@ public class Registrarse extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
     }
+
+
 }

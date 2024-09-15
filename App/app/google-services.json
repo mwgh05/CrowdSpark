@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "412589624484",
+    "project_id": "prueba-13691",
+    "storage_bucket": "prueba-13691.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:412589624484:android:d920c90ec6f37b66c9aa31",
+        "android_client_info": {
+          "package_name": "com.example.crowdspark"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBzNsxZhVFUKCmb48vA7JDvNah2Q9P-RnI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
