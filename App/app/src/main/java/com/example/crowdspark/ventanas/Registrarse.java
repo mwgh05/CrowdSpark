@@ -89,16 +89,7 @@ public class Registrarse extends AppCompatActivity {
                     CorreoService correoService = new CorreoService();
                     FireBaseConnection firebase = new FireBaseConnection();
                     firebase.registrar(correo,password,nombre,area,cedula,dinero,telefono,Registrarse.this);
-
-
-                    //correoService.enviarCorreo(correo,"Usuario Registrado","Bienvenido a CrowdSpark "+nombre ,v.getContext());
-                    //
-
-
-
-
-                    /*
-
+                    correoService.enviarCorreo(correo,"Usuario Registrado","Bienvenido a CrowdSpark "+nombre ,v.getContext());
                     correoText.setText("");
                     cedulaText.setText("");
                     nombreText.getEditText().setText("");
@@ -108,7 +99,6 @@ public class Registrarse extends AppCompatActivity {
                     passwordText.setText("");
                     password2Text.setText("");
 
-                     */
 
                 }
 

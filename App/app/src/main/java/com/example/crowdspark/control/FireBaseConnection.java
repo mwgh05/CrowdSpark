@@ -65,38 +65,6 @@ public class FireBaseConnection {
             }
         });
 
-/*        mAuth.createUserWithEmailAndPassword(correo,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()){
-                    String id= mAuth.getCurrentUser().getUid();
-                    Map<String, Object> map = new HashMap<>();
-                    map.put("nombre",nombre);
-                    map.put("correo",correo);
-                    map.put("password",password);
-                    map.put("area",area);
-                    map.put("cedula",cedula);
-                    map.put("dinero",dinero);
-                    map.put("telefono",telefono);
-                    map.put("estado","activo");
-                    mFirestore.collection("Usuarios").document(id).set(map).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()){
-
-                                desplegarMensaje("Usuario registrado", context);
-                            }
-                            else {desplegarMensaje("No se ha podido registrar al usuario", context);}
-                        }
-                    });
-                }else{
-                    desplegarMensaje("Error", context);
-                }
-            }
-        });
-
- */
-
     }
     public void leerDatos(Context context){
         mFirestore.collection("Usuarios")
@@ -114,7 +82,7 @@ public class FireBaseConnection {
                             String correo = document.getString("correo"); // Obtener el campo "correo"
 
                             // Mostrar los datos obtenidos en Logcat
-                            desplegarMensaje(", Nombre: " + nombre + ", Correo: " + correo,context);
+                            desplegarMensaje(" Nombre: " + nombre + ", Correo: " + correo,context);
                         }
                     } else {
                         Log.w(TAG, "Error al obtener documentos.", task.getException());
