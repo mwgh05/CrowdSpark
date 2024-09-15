@@ -1,4 +1,4 @@
-package com.example.crowdspark.ventanas;
+package com.example.crowdspark.admin;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,20 +12,22 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.crowdspark.R;
+import com.example.crowdspark.ventanas.Historial;
+import com.example.crowdspark.ventanas.Principal;
 
-public class Donacion extends AppCompatActivity {
+public class Donaciones extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_donacion);
+        setContentView(R.layout.activity_donaciones);
 
         ImageButton botonAtras = findViewById(R.id.back);
         botonAtras.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Donacion.this, Principal.class);
+                Intent intent = new Intent(Donaciones.this, PrincipalAdmin.class);
                 startActivity(intent);
             }
         });

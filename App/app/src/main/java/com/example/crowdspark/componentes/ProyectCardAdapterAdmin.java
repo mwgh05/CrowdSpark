@@ -1,6 +1,7 @@
 package com.example.crowdspark.componentes;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,12 +12,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.content.Intent;
+
 import androidx.annotation.NonNull;
 
-//import com.example.crowdspark.R;
 import com.example.crowdspark.R;
-import com.example.crowdspark.ventanas.DetalleProyecto;
+import com.example.crowdspark.admin.DetalleProyectoAdmin;
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -26,15 +26,17 @@ import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 
 import java.util.ArrayList;
 
-public class ProyectCardAdapter extends ArrayAdapter<ProyectCard> {
+public class ProyectCardAdapterAdmin extends ArrayAdapter<ProyectCard> {
 
-    private static final String TAG = "ProyectCardAdapter";
+    private static final String TAG = "ProyectCardAdapterAdmin";
 
     private Context mContext;
     private int mResource;
     private int lastPosition = -1;
 
-
+    /**
+     * Holds variables in a View
+     */
     private static class ViewHolder {
         TextView nombre;
         TextView fecha;
@@ -51,20 +53,20 @@ public class ProyectCardAdapter extends ArrayAdapter<ProyectCard> {
      * @param resource
      * @param objects
      */
-    public ProyectCardAdapter(Context context, int resource, ArrayList<ProyectCard> objects) {
+    public ProyectCardAdapterAdmin(Context context, int resource, ArrayList<ProyectCard> objects) {
         super(context, resource, objects);
         mContext = context;
         mResource = resource;
     }
 
-@NonNull
+    @NonNull
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-
+        //sets up the image loader library
         setupImageLoader();
 
-
+        //get the persons information
         String nombre = getItem(position).getNombre();
         String fecha = getItem(position).getFecha();
         String descripcion = getItem(position).getDescripcion();
@@ -76,14 +78,17 @@ public class ProyectCardAdapter extends ArrayAdapter<ProyectCard> {
 
         try{
 
+
+            //create the view result for showing the animation
             final View result;
 
-            ViewHolder holder;
+            //ViewHolder object
+            ProyectCardAdapterAdmin.ViewHolder holder;
 
             if(convertView == null){
                 LayoutInflater inflater = LayoutInflater.from(mContext);
                 convertView = inflater.inflate(mResource, parent, false);
-                holder= new ViewHolder();
+                holder= new ProyectCardAdapterAdmin.ViewHolder();
                 holder.nombre = (TextView) convertView.findViewById(R.id.nombre);
                 holder.fecha = (TextView) convertView.findViewById(R.id.fecha);
                 holder.descripcion = (TextView) convertView.findViewById(R.id.descripcion);
@@ -95,7 +100,7 @@ public class ProyectCardAdapter extends ArrayAdapter<ProyectCard> {
                 holder.detalle.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(mContext, DetalleProyecto.class);
+                        Intent intent = new Intent(mContext, DetalleProyectoAdmin.class);
                         intent.putExtra("nombre", nombre);
                         intent.putExtra("fecha", fecha);
                         intent.putExtra("descripcion", descripcion);
@@ -111,7 +116,7 @@ public class ProyectCardAdapter extends ArrayAdapter<ProyectCard> {
                 convertView.setTag(holder);
             }
             else{
-                holder = (ViewHolder) convertView.getTag();
+                holder = (ProyectCardAdapterAdmin.ViewHolder) convertView.getTag();
                 result = convertView;
             }
 
@@ -127,16 +132,19 @@ public class ProyectCardAdapter extends ArrayAdapter<ProyectCard> {
             holder.monto.setText(monto);
             holder.objetivo.setText(objetivo);
 
+            //create the imageloader object
             ImageLoader imageLoader = ImageLoader.getInstance();
 
             int defaultImage = mContext.getResources().getIdentifier("@drawable/image_failed",null,mContext.getPackageName());
 
+            //create display options
             DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true)
                     .cacheOnDisc(true).resetViewBeforeLoading(true)
                     .showImageForEmptyUri(defaultImage)
                     .showImageOnFail(defaultImage)
                     .showImageOnLoading(defaultImage).build();
 
+            //download and display image from url
             imageLoader.displayImage(imgUrl, holder.image, options);
 
             return convertView;
@@ -147,8 +155,11 @@ public class ProyectCardAdapter extends ArrayAdapter<ProyectCard> {
 
     }
 
-
+    /**
+     * Required for setting up the Universal Image loader Library
+     */
     private void setupImageLoader(){
+        // UNIVERSAL IMAGE LOADER SETUP
         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
                 .cacheOnDisc(true).cacheInMemory(true)
                 .imageScaleType(ImageScaleType.EXACTLY)
@@ -161,5 +172,6 @@ public class ProyectCardAdapter extends ArrayAdapter<ProyectCard> {
                 .discCacheSize(100 * 1024 * 1024).build();
 
         ImageLoader.getInstance().init(config);
+        // END - UNIVERSAL IMAGE LOADER SETUP
     }
 }
