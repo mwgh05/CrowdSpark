@@ -8,6 +8,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.example.crowdspark.MainActivity;
+import com.example.crowdspark.ventanas.Principal;
 import com.example.crowdspark.ventanas.Registrarse;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -35,6 +36,7 @@ import java.util.Map;
 public class FireBaseConnection {
     private FirebaseFirestore mFirestore;
     private static final String TAG = "FirestoreExample";
+    private boolean b;
     public FireBaseConnection() {
         this.mFirestore = FirebaseFirestore.getInstance();
     }
@@ -89,6 +91,33 @@ public class FireBaseConnection {
                     }
                 });
 
+    }
+    public void verificarUsuario(Context context, String correo, String password){
+
+        mFirestore.collection("Usuarios")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        // El resultado de la consulta es un objeto QuerySnapshot
+                        QuerySnapshot querySnapshot = task.getResult();
+
+                        // Iterar sobre cada documento en QuerySnapshot
+                        for (QueryDocumentSnapshot document : querySnapshot) {
+                            if(document.getString("correo").equals(correo)){
+                               
+                                if (document.getString("password").equals(password)){
+                                    Intent intent = new Intent(context, Principal.class);
+                                    context.startActivity(intent);
+                                }
+                                else {
+                                    desplegarMensaje("Contraseña incorrecta",context);
+                                }
+                            }
+                        }
+                    } else {
+                        Log.w(TAG, "Error al obtener documentos.", task.getException());
+                    }
+                });
     }
     private  void desplegarMensaje(CharSequence text, Context context){
         int duration = Toast.LENGTH_SHORT;

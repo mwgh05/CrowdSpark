@@ -21,8 +21,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        FireBaseConnection firebase = new FireBaseConnection();
-        firebase.leerDatos(this);
+
         Button botonRegistrar = findViewById(R.id.button2);
         botonRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,17 +39,10 @@ public class MainActivity extends AppCompatActivity {
                 String correo = correoText.getText().toString();
                 EditText passwordText = findViewById(R.id.editTextTextPassword3);
                 String password = passwordText.getText().toString();
+                FireBaseConnection firebase = new FireBaseConnection();
+                firebase.verificarUsuario(v.getContext(),correo,password);
 
 
-                if(correo.equals("") && password.equals("") ){
-                    Intent intent = new Intent(MainActivity.this, Principal.class);
-                    startActivity(intent);
-                } else {
-                    CharSequence text = "Correo o contraseña erronea";
-                    int duration = Toast.LENGTH_SHORT;
-                    Toast toast = Toast.makeText(v.getContext(), text, duration);
-                    toast.show();
-                }
 
             }
         });
