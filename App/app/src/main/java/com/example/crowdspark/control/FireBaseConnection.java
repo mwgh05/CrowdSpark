@@ -91,6 +91,31 @@ public class FireBaseConnection {
 
 
     }
+
+    public void crearProyecto(String nombre, String descripcion, String objetivo, String categoria,
+                              String fecha, String imageURL, String idEncargado, Context context){
+        Map<String, Object> map = new HashMap<>();
+        map.put("Nombre",nombre);
+        map.put("Descripcion",descripcion);
+        map.put("Objetivo",objetivo);
+        map.put("Categoria",categoria);
+        map.put("Fecha",fecha);
+        map.put("Imagen",imageURL);
+        map.put("idEncargado",idEncargado);
+
+        // Agrega el nuevo proyecto a la colección "Proyecto"
+        mFirestore.collection("Proyecto").add(map)
+                .addOnSuccessListener(documentReference -> {
+                    desplegarMensaje("Proyecto registrado", context);
+                    Intent intent = new Intent(context, MainActivity.class);
+                    context.startActivity(intent);
+                })
+                .addOnFailureListener(e -> {
+                    desplegarMensaje("No se ha podido registrar el proyecto: " + e.getMessage(), context);
+                });
+    }
+
+
     public void leerDatos(Context context){
         mFirestore.collection("Usuarios")
                 .get()
