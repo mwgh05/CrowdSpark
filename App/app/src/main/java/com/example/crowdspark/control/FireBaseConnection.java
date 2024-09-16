@@ -4,11 +4,15 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
 import com.example.crowdspark.MainActivity;
+import com.example.crowdspark.R;
+import com.example.crowdspark.componentes.ProyectCard;
+import com.example.crowdspark.componentes.ProyectCardAdapterAdmin;
 import com.example.crowdspark.ventanas.Principal;
 import com.example.crowdspark.ventanas.Registrarse;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -35,6 +39,7 @@ import android.os.Bundle;
 import android.util.Log;
 import androidx.annotation.NonNull;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -102,6 +107,7 @@ public class FireBaseConnection {
         map.put("Fecha",fecha);
         map.put("Imagen",imageURL);
         map.put("idEncargado",idEncargado);
+        map.put("Monto","0");
 
         // Agrega el nuevo proyecto a la colección "Proyecto"
         mFirestore.collection("Proyecto").add(map)
@@ -140,8 +146,8 @@ public class FireBaseConnection {
                 });
 
     }
+    /*Verifica que el usuario esté Registrado y la contraseña sea correcta*/
     public void verificarUsuario(Context context, String correo, String password){
-
         mFirestore.collection("Usuarios").whereEqualTo("correo", correo)
                 .get()
                 .addOnCompleteListener(task -> {
@@ -154,7 +160,10 @@ public class FireBaseConnection {
                         else {
                             // Iterar sobre cada documento en QuerySnapshot
                             for (QueryDocumentSnapshot document : querySnapshot) {
-                                if (document.getString("password").equals(password)) {
+                                if (document.getString("estado").equals("inactivo")){
+                                    desplegarMensaje("Usuario inactivo", context);
+                                }
+                                else if (document.getString("password").equals(password) && document.getString("estado").equals("activo")) {
                                     Intent intent = new Intent(context, Principal.class);
                                     context.startActivity(intent);
                                 } else {
@@ -167,11 +176,13 @@ public class FireBaseConnection {
                     }
                 });
     }
+    /*Despliega un mensaje con un toast*/
     private  void desplegarMensaje(CharSequence text, Context context){
         int duration = Toast.LENGTH_SHORT;
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
     }
+    /*Sube una foto con el nombre del proyecto*/
     public void subirFoto(String nombre, Uri uri){
         StorageReference storageReference;
         String storagePath = "/*";
@@ -192,8 +203,36 @@ public class FireBaseConnection {
                         }
                     });
                 }
-
             }
         });
     };
+    /*Muestra los proyectos*/
+    public void mostrarProyecto(ListView listView, Context context){
+        mFirestore.collection("Proyecto")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        // El resultado de la consulta es un objeto QuerySnapshot
+                        QuerySnapshot querySnapshot = task.getResult();
+                        ArrayList<ProyectCard> proyects = new ArrayList<>();
+                        // Iterar sobre cada documento en QuerySnapshot
+                        for (QueryDocumentSnapshot document : querySnapshot) {
+                            // Usamos el objeto QueryDocumentSnapshot para acceder a los datos del documento
+                            String categoria = document.getString("Categoria"); // Obtener el ID del documento
+                            String descripcion = document.getString("Descripcion"); // Obtener el campo "nombre"
+                            String fecha = document.getString("Fecha"); // Obtener el campo "correo"
+                            String imagen = document.getString("Imagen"); // Obtener el ID del documento
+                            String nombre = document.getString("Nombre"); // Obtener el campo "nombre"
+                            String objetivo = document.getString("Objetivo"); // Obtener el campo "correo"
+                            String monto = document.getString("Monto"); // Obtener el campo "correo"
+                            proyects.add(new ProyectCard(imagen, nombre, fecha, descripcion, monto, objetivo));
+                        }
+                        ProyectCardAdapterAdmin adapter = new ProyectCardAdapterAdmin(context, R.layout.activity_proyect_card, proyects);
+                        listView.setAdapter(adapter);
+                    } else {
+                        desplegarMensaje("Error",context);
+                    }
+                });
+
+    }
 }

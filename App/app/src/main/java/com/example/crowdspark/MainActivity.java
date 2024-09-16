@@ -41,9 +41,7 @@ public class MainActivity extends AppCompatActivity {
                 String password = passwordText.getText().toString();
                 FireBaseConnection firebase = new FireBaseConnection();
                 firebase.verificarUsuario(v.getContext(),correo,password);
-
-
-
+                passwordText.setText("");
             }
         });
 
