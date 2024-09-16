@@ -13,6 +13,7 @@ import com.example.crowdspark.MainActivity;
 import com.example.crowdspark.R;
 import com.example.crowdspark.componentes.ProyectCard;
 import com.example.crowdspark.componentes.ProyectCardAdapterAdmin;
+import com.example.crowdspark.ventanas.Formulario;
 import com.example.crowdspark.ventanas.Principal;
 import com.example.crowdspark.ventanas.Registrarse;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -165,6 +166,7 @@ public class FireBaseConnection {
                                 }
                                 else if (document.getString("password").equals(password) && document.getString("estado").equals("activo")) {
                                     Intent intent = new Intent(context, Principal.class);
+                                    MainActivity.setCorreoColaborador(correo);
                                     context.startActivity(intent);
                                 } else {
                                     desplegarMensaje("Contraseña incorrecta", context);
@@ -176,14 +178,11 @@ public class FireBaseConnection {
                     }
                 });
     }
-    /*Despliega un mensaje con un toast*/
-    private  void desplegarMensaje(CharSequence text, Context context){
-        int duration = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
-    }
+
     /*Sube una foto con el nombre del proyecto*/
-    public void subirFoto(String nombre, Uri uri){
+
+    public void subirFoto(String nombre, String descripcion, String objetivo, String categoria,
+                          String fecha, Uri uri, String idEncargado, Context context){
         StorageReference storageReference;
         String storagePath = "/*";
         storageReference = FirebaseStorage.getInstance().getReference();
@@ -198,8 +197,7 @@ public class FireBaseConnection {
                     uriTask.addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
-                           /*Imprime algo o hace una accion*/
-
+                            crearProyecto(nombre, descripcion, objetivo, categoria, fecha, String.valueOf(uri), idEncargado, context);
                         }
                     });
                 }
@@ -234,5 +232,11 @@ public class FireBaseConnection {
                     }
                 });
 
+    }
+    /*Despliega un mensaje con un toast*/
+    private  void desplegarMensaje(CharSequence text, Context context){
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
     }
 }

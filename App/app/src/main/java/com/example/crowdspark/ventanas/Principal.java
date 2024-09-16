@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.crowdspark.MainActivity;
 import com.example.crowdspark.R;
 import com.example.crowdspark.componentes.ProyectCard;
 import com.example.crowdspark.componentes.ProyectCardAdapter;
@@ -24,7 +26,6 @@ public class Principal extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_principal);
         listview = (ListView) findViewById(R.id.listview);
-
         FireBaseConnection firebase = new FireBaseConnection();
         firebase.mostrarProyecto(listview,this);
 
