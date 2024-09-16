@@ -86,27 +86,8 @@ public class Registrarse extends AppCompatActivity {
                 } else if(!password2.equals(password)){
                     desplegarMensaje("Las contraseñas deben ser iguales");
                 } else {
-                    CorreoService correoService = new CorreoService();
                     FireBaseConnection firebase = new FireBaseConnection();
                     firebase.registrar(correo,password,nombre,area,cedula,dinero,telefono,Registrarse.this);
-                    //correoService.enviarCorreo(correo,"Usuario Registrado","Bienvenido a CrowdSpark "+nombre ,v.getContext());
-                    //
-
-
-
-
-                    /*
-
-                    correoText.setText("");
-                    cedulaText.setText("");
-                    nombreText.getEditText().setText("");
-                    areaText.getEditText().setText("");
-                    dineroText.setText("");
-                    telefonoText.setText("");
-                    passwordText.setText("");
-                    password2Text.setText("");
-
-                     */
 
                 }
 

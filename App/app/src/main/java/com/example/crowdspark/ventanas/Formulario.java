@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -28,6 +29,9 @@ import androidx.core.view.WindowInsetsCompat;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import com.example.crowdspark.R;
+import com.example.crowdspark.control.FireBaseConnection;
+import com.google.android.material.textfield.TextInputLayout;
+
 import androidx.core.app.ActivityCompat;
 import java.util.Calendar;
 
@@ -89,6 +93,25 @@ public class Formulario extends AppCompatActivity {
             public void onClick(View v) {
 
                 abrirGaleria();
+            }
+        });
+
+        //Subir proyecto
+        Button botonSubir = findViewById(R.id.button);
+        botonSubir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TextInputLayout nombreText = findViewById(R.id.nombreProyecto);
+                String nombre = String.valueOf(nombreText.getEditText().getText());
+                TextInputLayout descripcionText = findViewById(R.id.descripcionProyecto);
+                String descripcion = String.valueOf(nombreText.getEditText().getText());
+                EditText objetivoText = findViewById(R.id.editTextNumberDecimal);
+                String objetivo = objetivoText.getText().toString();
+                TextInputLayout categoriaText = findViewById(R.id.categoriaProyecto);
+                String categoria = String.valueOf(nombreText.getEditText().getText());
+
+                FireBaseConnection firebase = new FireBaseConnection();
+                firebase.crearProyecto(nombre, descripcion, objetivo, categoria, dateButton.getText().toString(), "a", "a", Formulario.this);
             }
         });
 

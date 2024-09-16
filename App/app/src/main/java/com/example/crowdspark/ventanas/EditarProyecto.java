@@ -26,8 +26,16 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.bumptech.glide.Glide;
 import com.example.crowdspark.R;
+import com.google.android.gms.auth.api.signin.internal.Storage;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.Firebase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.Calendar;
+import java.util.HashMap;
 
 public class EditarProyecto extends AppCompatActivity {
     private Uri uri = null;
@@ -95,6 +103,7 @@ public class EditarProyecto extends AppCompatActivity {
             public void onClick(View v) {
 
                 abrirGaleria();
+
             }
         });
 

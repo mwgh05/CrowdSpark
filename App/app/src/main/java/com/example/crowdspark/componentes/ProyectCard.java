@@ -23,14 +23,16 @@ public class ProyectCard extends AppCompatActivity {
     private String descripcion;
     private String monto;
     private String objetivo;
+    private String categoria;
 
-    public ProyectCard(String imgurl, String nombre, String fecha, String descripcion, String monto, String objetivo) {
+    public ProyectCard(String imgurl, String nombre, String fecha, String descripcion, String monto, String objetivo, String categoria) {
         this.imgurl = imgurl;
         this.nombre = nombre;
         this.fecha = fecha;
         this.descripcion = descripcion;
         this.monto = monto;
         this.objetivo = objetivo;
+        this.categoria = categoria;
     }
 
     public String getImgurl() {
@@ -80,6 +82,15 @@ public class ProyectCard extends AppCompatActivity {
     public void setObjetivo(String objetivo) {
         this.objetivo = objetivo;
     }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
