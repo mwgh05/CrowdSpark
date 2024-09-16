@@ -225,7 +225,7 @@ public class FireBaseConnection {
                             String nombre = document.getString("Nombre"); // Obtener el campo "nombre"
                             String objetivo = document.getString("Objetivo"); // Obtener el campo "correo"
                             String monto = document.getString("Monto"); // Obtener el campo "correo"
-                            proyects.add(new ProyectCard(imagen, nombre, fecha, descripcion, monto, objetivo));
+                            proyects.add(new ProyectCard(imagen, nombre, fecha, descripcion, monto, objetivo, categoria));
                         }
                         ProyectCardAdapterAdmin adapter = new ProyectCardAdapterAdmin(context, R.layout.activity_proyect_card, proyects);
                         listView.setAdapter(adapter);
