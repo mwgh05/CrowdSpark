@@ -116,7 +116,7 @@ public class FireBaseConnection {
         mFirestore.collection("Proyecto").add(map)
                 .addOnSuccessListener(documentReference -> {
                     desplegarMensaje("Proyecto registrado", context);
-                    Intent intent = new Intent(context, MainActivity.class);
+                    Intent intent = new Intent(context, Principal.class);
                     context.startActivity(intent);
                 })
                 .addOnFailureListener(e -> {
@@ -127,12 +127,14 @@ public class FireBaseConnection {
     public void modificarProyecto(String nombre, String descripcion, String objetivo, String categoria,
                                   String fecha, String imageURL, String idEncargado, String nombreProyecto, Context context) {
         // Busca el proyecto con el nombre proporcionado
+        desplegarMensaje("Ha llegado aqui 2",context);
         mFirestore.collection("Proyecto")
                 .whereEqualTo("Nombre", nombreProyecto)  // Busca por el nombre proporcionado
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         QuerySnapshot querySnapshot = task.getResult();
+                        try{
                         if (!querySnapshot.isEmpty()) {
                             // Si se encontró un proyecto con el nombre proporcionado
                             DocumentSnapshot documentSnapshot = querySnapshot.getDocuments().get(0); // Obtén el primer resultado
@@ -149,19 +151,24 @@ public class FireBaseConnection {
                             map.put("idEncargado", idEncargado);
 
                             // Actualiza el documento con los nuevos datos
-                            mFirestore.collection("Proyecto").document(documentId)
-                                    .update(map)
-                                    .addOnSuccessListener(aVoid -> {
-                                        desplegarMensaje("Proyecto modificado con éxito", context);
-                                        Intent intent = new Intent(context, MainActivity.class);
-                                        context.startActivity(intent);
-                                    })
-                                    .addOnFailureListener(e -> {
-                                        desplegarMensaje("Error al modificar el proyecto: " + e.getMessage(), context);
-                                    });
+
+                                mFirestore.collection("Proyecto").document(documentId)
+                                        .update(map)
+                                        .addOnSuccessListener(aVoid -> {
+                                            desplegarMensaje("Proyecto modificado con éxito", context);
+                                            Intent intent = new Intent(context, Principal.class);
+                                            context.startActivity(intent);
+                                        })
+                                        .addOnFailureListener(e -> {
+                                            desplegarMensaje("Error al modificar el proyecto: " + e.getMessage(), context);
+                                        });
+
                         } else {
                             // Si no se encontró ningún proyecto con ese nombre
                             desplegarMensaje("No se encontró ningún proyecto con ese nombre", context);
+                        }
+                        } catch ( Exception e){
+                            desplegarMensaje(e.getMessage().toString(), context);
                         }
                     } else {
                         // Si hubo un error al realizar la consulta
@@ -230,6 +237,7 @@ public class FireBaseConnection {
 
     public void subirFoto(int tipo, String nombre, String descripcion, String objetivo, String categoria,
                           String fecha, Uri uri, String idEncargado, String nombreProyecto, Context context){
+        desplegarMensaje("Ha llegado aqui",context);
         StorageReference storageReference;
         String storagePath = "/*";
         storageReference = FirebaseStorage.getInstance().getReference();
@@ -291,6 +299,7 @@ public class FireBaseConnection {
                 });
 
     }
+
     /*Despliega un mensaje con un toast*/
     private  void desplegarMensaje(CharSequence text, Context context){
         int duration = Toast.LENGTH_SHORT;

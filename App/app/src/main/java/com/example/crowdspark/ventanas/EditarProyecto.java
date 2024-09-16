@@ -138,15 +138,21 @@ public class EditarProyecto extends AppCompatActivity {
                 String nombre = String.valueOf(nombreText.getEditText().getText());
                 TextInputLayout descripcionText = findViewById(R.id.descripcionProyecto);
                 String descripcion = String.valueOf(descripcionText.getEditText().getText());
+
                 EditText objetivoText = findViewById(R.id.editTextNumberDecimal);
                 String objetivo = objetivoText.getText().toString();
-                TextInputLayout categoriaText = findViewById(R.id.categoriaProyecto);
+                TextInputLayout categoriaText = findViewById(R.id.categoria);
                 String categoria = String.valueOf(categoriaText.getEditText().getText());
                 String elementoSeleccionado = spinner.getSelectedItem().toString();
-
                 FireBaseConnection firebase = new FireBaseConnection();
-                firebase.subirFoto(0, nombre, descripcion, objetivo, categoria, dateButton.getText().toString(), uri, MainActivity.getCorreoColaborador(), elementoSeleccionado,EditarProyecto.this);
+                if (uri != null) {
+                    firebase.subirFoto(0, nombre, descripcion, objetivo, categoria, dateButton.getText().toString(), uri, MainActivity.getCorreoColaborador(), elementoSeleccionado, v.getContext());
+                } else {
+                    firebase.modificarProyecto(nombre, descripcion, objetivo, categoria, dateButton.getText().toString(), "", MainActivity.getCorreoColaborador(), elementoSeleccionado, v.getContext());
+
+                }
             }
+
         });
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
