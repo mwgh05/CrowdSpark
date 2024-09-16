@@ -113,30 +113,7 @@ public class EditarProyecto extends AppCompatActivity {
             return insets;
         });
     }
-    private  void subirFoto(String nombre){
-        StorageReference storageReference;
-        String storagePath = "/*";
-        storageReference = FirebaseStorage.getInstance().getReference();
-        String rute = storagePath+ ""+nombre;
-        StorageReference reference = storageReference.child(rute);
-        reference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
-                while (!uriTask.isSuccessful());
-                if (uriTask.isSuccessful()){
-                    uriTask.addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {
-                            desplegarMensaje("foto subida");
 
-                        }
-                    });
-                }
-
-            }
-        });
-    };
     /*Abre la galería*/
     private void abrirGaleria() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);

@@ -3,6 +3,7 @@ package com.example.crowdspark.control;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -26,6 +27,10 @@ import android.util.Log;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
 import android.os.Bundle;
 import android.util.Log;
 import androidx.annotation.NonNull;
@@ -142,4 +147,28 @@ public class FireBaseConnection {
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
     }
+    public void subirFoto(String nombre, Uri uri){
+        StorageReference storageReference;
+        String storagePath = "/*";
+        storageReference = FirebaseStorage.getInstance().getReference();
+        String rute = storagePath+ ""+nombre;
+        StorageReference reference = storageReference.child(rute);
+        reference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
+                while (!uriTask.isSuccessful());
+                if (uriTask.isSuccessful()){
+                    uriTask.addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                           /*Imprime algo o hace una accion*/
+
+                        }
+                    });
+                }
+
+            }
+        });
+    };
 }
