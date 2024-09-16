@@ -43,29 +43,47 @@ public class FireBaseConnection {
 
     public void registrar(String correo, String password, String nombre,String area,
                           String cedula, String dinero, String telefono, Context context){
-        mFirestore = FirebaseFirestore.getInstance();
-        Map<String, Object> map = new HashMap<>();
-        map.put("nombre",nombre);
-        map.put("correo",correo);
-        map.put("password",password);
-        map.put("area",area);
-        map.put("cedula",cedula);
-        map.put("dinero",dinero);
-        map.put("telefono",telefono);
-        map.put("estado","activo");
-        mFirestore.collection("Usuarios").add(map).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-            @Override
-            public void onSuccess(DocumentReference documentReference) {
-                desplegarMensaje("Usuario registrado", context);
-                Intent intent = new Intent(context, MainActivity.class);
-                context.startActivity(intent);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                desplegarMensaje("No se ha podido registrar "+e, context);
-            }
-        });
+        mFirestore.collection("Usuarios").whereEqualTo("correo", correo)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        // El resultado de la consulta es un objeto QuerySnapshot
+                        QuerySnapshot querySnapshot = task.getResult();
+                        if (querySnapshot.size() == 0){
+                            Map<String, Object> map = new HashMap<>();
+                            map.put("nombre",nombre);
+                            map.put("correo",correo);
+                            map.put("password",password);
+                            map.put("area",area);
+                            map.put("cedula",cedula);
+                            map.put("dinero",dinero);
+                            map.put("telefono",telefono);
+                            map.put("estado","activo");
+                            mFirestore.collection("Usuarios").add(map).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                @Override
+                                public void onSuccess(DocumentReference documentReference) {
+                                    desplegarMensaje("Usuario registrado", context);
+                                    CorreoService correoService = new CorreoService();
+                                    correoService.enviarCorreo(correo,"Usuario Registrado","Bienvenido a CrowdSpark "+nombre ,context);
+                                    Intent intent = new Intent(context, MainActivity.class);
+                                    context.startActivity(intent);
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    desplegarMensaje("No se ha podido registrar "+e, context);
+                                }
+                            });
+                        }
+                        else {
+                          desplegarMensaje("Usuario existente", context);
+
+                        }
+                    } else {
+                        desplegarMensaje("Error",context);
+                    }
+                });
+
 
     }
     public void leerDatos(Context context){
@@ -94,28 +112,28 @@ public class FireBaseConnection {
     }
     public void verificarUsuario(Context context, String correo, String password){
 
-        mFirestore.collection("Usuarios")
+        mFirestore.collection("Usuarios").whereEqualTo("correo", correo)
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         // El resultado de la consulta es un objeto QuerySnapshot
                         QuerySnapshot querySnapshot = task.getResult();
-
-                        // Iterar sobre cada documento en QuerySnapshot
-                        for (QueryDocumentSnapshot document : querySnapshot) {
-                            if(document.getString("correo").equals(correo)){
-                               
-                                if (document.getString("password").equals(password)){
+                        if (querySnapshot.size() == 0){
+                            desplegarMensaje("Usuario no encontrado",context);
+                        }
+                        else {
+                            // Iterar sobre cada documento en QuerySnapshot
+                            for (QueryDocumentSnapshot document : querySnapshot) {
+                                if (document.getString("password").equals(password)) {
                                     Intent intent = new Intent(context, Principal.class);
                                     context.startActivity(intent);
-                                }
-                                else {
-                                    desplegarMensaje("Contraseña incorrecta",context);
+                                } else {
+                                    desplegarMensaje("Contraseña incorrecta", context);
                                 }
                             }
                         }
                     } else {
-                        Log.w(TAG, "Error al obtener documentos.", task.getException());
+                        desplegarMensaje("Error",context);
                     }
                 });
     }
