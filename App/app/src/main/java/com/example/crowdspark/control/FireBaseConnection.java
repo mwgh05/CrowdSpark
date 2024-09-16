@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import com.example.crowdspark.MainActivity;
 import com.example.crowdspark.R;
 import com.example.crowdspark.componentes.ProyectCard;
+import com.example.crowdspark.componentes.ProyectCardAdapter;
 import com.example.crowdspark.componentes.ProyectCardAdapterAdmin;
 import com.example.crowdspark.ventanas.Formulario;
 import com.example.crowdspark.ventanas.Principal;
@@ -255,7 +256,7 @@ public class FireBaseConnection {
         });
     };
     /*Muestra los proyectos*/
-    public void mostrarProyecto(ListView listView, Context context){
+    public void mostrarProyecto(ListView listView, Context context, Boolean modo){
         mFirestore.collection("Proyecto")
                 .get()
                 .addOnCompleteListener(task -> {
@@ -275,8 +276,15 @@ public class FireBaseConnection {
                             String monto = document.getString("Monto"); // Obtener el campo "correo"
                             proyects.add(new ProyectCard(imagen, nombre, fecha, descripcion, monto, objetivo, categoria));
                         }
-                        ProyectCardAdapterAdmin adapter = new ProyectCardAdapterAdmin(context, R.layout.activity_proyect_card, proyects);
-                        listView.setAdapter(adapter);
+                        if(modo){
+                            ProyectCardAdapterAdmin adapter = new ProyectCardAdapterAdmin(context, R.layout.activity_proyect_card, proyects);
+                            listView.setAdapter(adapter);
+                        }
+                        else {
+                            ProyectCardAdapter adapter = new ProyectCardAdapter(context, R.layout.activity_proyect_card, proyects);
+                            listView.setAdapter(adapter);
+                        }
+
                     } else {
                         desplegarMensaje("Error",context);
                     }

@@ -40,7 +40,7 @@ public class PrincipalAdmin extends AppCompatActivity {
         listview = (ListView) findViewById(R.id.listview);
 
         FireBaseConnection firebase = new FireBaseConnection();
-        firebase.mostrarProyecto(listview,this);
+        firebase.mostrarProyecto(listview,this, true);
 
 
         Button botonUsuarios = findViewById(R.id.usuarios);

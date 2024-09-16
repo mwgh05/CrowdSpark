@@ -27,7 +27,7 @@ public class Principal extends AppCompatActivity {
         setContentView(R.layout.activity_principal);
         listview = (ListView) findViewById(R.id.listview);
         FireBaseConnection firebase = new FireBaseConnection();
-        firebase.mostrarProyecto(listview,this);
+        firebase.mostrarProyecto(listview,this, false);
 
         Button botonCrearProyecto = findViewById(R.id.crearproyecto);
         botonCrearProyecto.setOnClickListener(new View.OnClickListener() {

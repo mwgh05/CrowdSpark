@@ -3,7 +3,9 @@ package com.example.crowdspark.admin;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.ListView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,8 +14,12 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.crowdspark.R;
+import com.example.crowdspark.componentes.DonacionesAdapter;
+import com.example.crowdspark.componentes.Donation;
 import com.example.crowdspark.ventanas.Historial;
 import com.example.crowdspark.ventanas.Principal;
+
+import java.util.ArrayList;
 
 public class Donaciones extends AppCompatActivity {
 
@@ -23,7 +29,35 @@ public class Donaciones extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_donaciones);
 
+        ListView listView = findViewById(R.id.lista);
+
         ImageButton botonAtras = findViewById(R.id.back);
+        ArrayList<Donation> listaDonaciones = new ArrayList<>();
+        listaDonaciones.add(new Donation("", "brandon04e@gmail.com", "Brandon", "Hola", "63136724"));
+        listaDonaciones.add(new Donation("", "brandon04e@gmail.com", "Brandon", "Hola", "63136724"));
+        listaDonaciones.add(new Donation("", "brandon04e@gmail.com", "Brandon", "Hola", "63136724"));
+        listaDonaciones.add(new Donation("", "brandon04e@gmail.com", "Brandon", "Hola", "63136724"));
+        listaDonaciones.add(new Donation("", "brandon04e@gmail.com", "Brandon", "Hola", "63136724"));
+        listaDonaciones.add(new Donation("", "brandon04e@gmail.com", "Brandon", "Hola", "63136724"));
+        listaDonaciones.add(new Donation("", "brandon04e@gmail.com", "Brandon", "Hola", "63136724"));
+        listaDonaciones.add(new Donation("", "brandon04e@gmail.com", "Brandon", "Hola", "63136724"));
+        listaDonaciones.add(new Donation("", "brandon04e@gmail.com", "Brandon", "Hola", "63136724"));
+        listaDonaciones.add(new Donation("", "brandon04e@gmail.com", "Brandon", "Hola", "63136724"));
+        listaDonaciones.add(new Donation("", "brandon04e@gmail.com", "Brandon", "Hola", "63136724"));
+        listaDonaciones.add(new Donation("", "brandon04e@gmail.com", "Brandon", "Hola", "63136724"));
+        listaDonaciones.add(new Donation("", "brandon04e@gmail.com", "Brandon", "Hola", "63136724"));
+        listaDonaciones.add(new Donation("", "brandon04e@gmail.com", "Brandon", "Hola", "63136724"));
+        listaDonaciones.add(new Donation("", "brandon04e@gmail.com", "Brandon", "Hola", "63136724"));
+        listaDonaciones.add(new Donation("", "brandon04e@gmail.com", "Brandon", "Hola", "63136724"));
+        listaDonaciones.add(new Donation("", "brandon04e@gmail.com", "Brandon", "Hola", "63136724"));
+        listaDonaciones.add(new Donation("", "brandon04e@gmail.com", "Brandon", "Hola", "63136724"));
+
+        DonacionesAdapter adapter = new DonacionesAdapter(this, R.layout.elemento, listaDonaciones);
+
+
+        // Establecer el adaptador en el ListView
+        listView.setAdapter(adapter);
+
         botonAtras.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
