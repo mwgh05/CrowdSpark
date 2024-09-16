@@ -124,6 +124,50 @@ public class FireBaseConnection {
                 });
     }
 
+    public void donar(String nombreProyecto, String idDonante, String monto, Context context) {
+        // Consulta Firestore para obtener el usuario con el idDonante (correo)
+        mFirestore.collection("Usuarios")
+                .whereEqualTo("correo", idDonante)  // Busca en la colección Usuarios donde "correo" sea igual a idDonante
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful() && !task.getResult().isEmpty()) {
+                        // Si se encuentra un usuario, obtiene el primer documento
+                        DocumentSnapshot document = task.getResult().getDocuments().get(0);
+
+                        // Extrae los valores de "nombre" y "telefono" del documento
+                        String nombreDonante = document.getString("nombre");
+                        String telefono = document.getString("telefono");
+
+                        // Crea el mapa con los valores para la donación
+                        Map<String, Object> map = new HashMap<>();
+                        map.put("Monto", monto);
+                        map.put("correo", idDonante);
+                        map.put("nombreDonante", nombreDonante);  // Asigna el nombre del donante
+                        map.put("nombreProyecto", nombreProyecto);
+                        map.put("telefono", telefono);  // Asigna el teléfono del donante
+
+                        // Agrega la donación a la colección "Proyecto"
+                        mFirestore.collection("Donacion").add(map)
+                                .addOnSuccessListener(documentReference -> {
+                                    desplegarMensaje("Donación registrada con éxito", context);
+                                    Intent intent = new Intent(context, Principal.class);
+                                    context.startActivity(intent);
+                                })
+                                .addOnFailureListener(e -> {
+                                    desplegarMensaje("No se ha podido registrar la donación: " + e.getMessage(), context);
+                                });
+
+                    } else {
+                        // Si no se encuentra el usuario, muestra un mensaje de error
+                        desplegarMensaje("No se ha encontrado el usuario con el correo proporcionado", context);
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    // Manejo de error en la consulta
+                    desplegarMensaje("Error al buscar el usuario: " + e.getMessage(), context);
+                });
+    }
+
     public void modificarProyecto(String nombre, String descripcion, String objetivo, String categoria,
                                   String fecha, String imageURL, String idEncargado, String nombreProyecto, Context context) {
         // Busca el proyecto con el nombre proporcionado

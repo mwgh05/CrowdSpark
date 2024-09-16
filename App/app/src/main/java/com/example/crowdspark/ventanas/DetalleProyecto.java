@@ -14,13 +14,14 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.crowdspark.MainActivity;
 import com.example.crowdspark.R;
 import com.example.crowdspark.componentes.ProyectCard;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class DetalleProyecto extends AppCompatActivity {
-
+    private static String nombreProyecto;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +37,8 @@ public class DetalleProyecto extends AppCompatActivity {
         ImageView image = findViewById(R.id.image);
 
         Intent intent = getIntent();
+
+        nombreProyecto = "";
         if (intent != null) {
             try {
                 String nombre = intent.getStringExtra("nombre");
@@ -46,6 +49,7 @@ public class DetalleProyecto extends AppCompatActivity {
                 String categoria = intent.getStringExtra("categoria");
                 String imgUrl = intent.getStringExtra("imgUrl");
 
+                nombreProyecto = nombre;
                 nombreTextView.setText(nombre);
                 fechaTextView.setText(fecha);
                 descripcionTextView.setText(descripcion);
@@ -92,5 +96,12 @@ public class DetalleProyecto extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+    }
+
+    public static String getnombreProyecto() {
+        return nombreProyecto;
+    }
+    public static void setnombreProyecto(String nombreProyecto) {
+        DetalleProyecto.nombreProyecto = nombreProyecto;
     }
 }
