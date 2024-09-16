@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.crowdspark.R;
 import com.example.crowdspark.componentes.ProyectCard;
 import com.example.crowdspark.componentes.ProyectCardAdapter;
+import com.example.crowdspark.control.FireBaseConnection;
 
 import java.util.ArrayList;
 
@@ -24,12 +25,8 @@ public class Principal extends AppCompatActivity {
         setContentView(R.layout.activity_principal);
         listview = (ListView) findViewById(R.id.listview);
 
-        ArrayList <ProyectCard> proyects = new ArrayList<>();
-        proyects.add(new ProyectCard("drawable://" + R.drawable.logo, "Proyecto 1", "10/09/2024", "Descripcion", "100", "1000", "categoria 1"));
-        proyects.add(new ProyectCard("drawable://" + R.drawable.logo, "Proyecto 2", "20/10/2024", "Descripcion", "500", "16000", "categoria 2"));
-
-        ProyectCardAdapter adapter = new ProyectCardAdapter(this, R.layout.activity_proyect_card, proyects);
-        listview.setAdapter(adapter);
+        FireBaseConnection firebase = new FireBaseConnection();
+        firebase.mostrarProyecto(listview,this);
 
         Button botonCrearProyecto = findViewById(R.id.crearproyecto);
         botonCrearProyecto.setOnClickListener(new View.OnClickListener() {
