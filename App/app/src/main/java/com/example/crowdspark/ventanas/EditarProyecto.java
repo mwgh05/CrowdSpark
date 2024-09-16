@@ -66,6 +66,7 @@ public class EditarProyecto extends AppCompatActivity {
         FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
 
         mFirestore.collection("Proyecto")
+                .whereEqualTo("idEncargado",  MainActivity.getCorreoColaborador())
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
