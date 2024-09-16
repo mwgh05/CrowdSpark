@@ -113,7 +113,7 @@ public class Formulario extends AppCompatActivity {
                 String categoria = String.valueOf(categoriaText.getEditText().getText());
 
                 FireBaseConnection firebase = new FireBaseConnection();
-                firebase.subirFoto(nombre, descripcion, objetivo, categoria, dateButton.getText().toString(), uri, MainActivity.getCorreoColaborador(), Formulario.this);
+                firebase.subirFoto(1, nombre, descripcion, objetivo, categoria, dateButton.getText().toString(), uri, MainActivity.getCorreoColaborador(), "",Formulario.this);
             }
         });
 

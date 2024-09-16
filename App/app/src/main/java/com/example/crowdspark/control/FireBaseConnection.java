@@ -23,6 +23,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.ktx.Firebase;
@@ -122,6 +123,51 @@ public class FireBaseConnection {
                 });
     }
 
+    public void modificarProyecto(String nombre, String descripcion, String objetivo, String categoria,
+                                  String fecha, String imageURL, String idEncargado, String nombreProyecto, Context context) {
+        // Busca el proyecto con el nombre proporcionado
+        mFirestore.collection("Proyecto")
+                .whereEqualTo("Nombre", nombreProyecto)  // Busca por el nombre proporcionado
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        QuerySnapshot querySnapshot = task.getResult();
+                        if (!querySnapshot.isEmpty()) {
+                            // Si se encontró un proyecto con el nombre proporcionado
+                            DocumentSnapshot documentSnapshot = querySnapshot.getDocuments().get(0); // Obtén el primer resultado
+                            String documentId = documentSnapshot.getId(); // Obtiene el ID del documento
+
+                            // Crea el mapa con la nueva información
+                            Map<String, Object> map = new HashMap<>();
+                            map.put("Nombre", nombre);
+                            map.put("Descripcion", descripcion);
+                            map.put("Objetivo", objetivo);
+                            map.put("Categoria", categoria);
+                            map.put("Fecha", fecha);
+                            map.put("Imagen", imageURL);
+                            map.put("idEncargado", idEncargado);
+
+                            // Actualiza el documento con los nuevos datos
+                            mFirestore.collection("Proyecto").document(documentId)
+                                    .update(map)
+                                    .addOnSuccessListener(aVoid -> {
+                                        desplegarMensaje("Proyecto modificado con éxito", context);
+                                        Intent intent = new Intent(context, MainActivity.class);
+                                        context.startActivity(intent);
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        desplegarMensaje("Error al modificar el proyecto: " + e.getMessage(), context);
+                                    });
+                        } else {
+                            // Si no se encontró ningún proyecto con ese nombre
+                            desplegarMensaje("No se encontró ningún proyecto con ese nombre", context);
+                        }
+                    } else {
+                        // Si hubo un error al realizar la consulta
+                        desplegarMensaje("Error en la consulta: " + task.getException().getMessage(), context);
+                    }
+                });
+    }
 
     public void leerDatos(Context context){
         mFirestore.collection("Usuarios")
@@ -181,8 +227,8 @@ public class FireBaseConnection {
 
     /*Sube una foto con el nombre del proyecto*/
 
-    public void subirFoto(String nombre, String descripcion, String objetivo, String categoria,
-                          String fecha, Uri uri, String idEncargado, Context context){
+    public void subirFoto(int tipo, String nombre, String descripcion, String objetivo, String categoria,
+                          String fecha, Uri uri, String idEncargado, String nombreProyecto, Context context){
         StorageReference storageReference;
         String storagePath = "/*";
         storageReference = FirebaseStorage.getInstance().getReference();
@@ -197,7 +243,11 @@ public class FireBaseConnection {
                     uriTask.addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
-                            crearProyecto(nombre, descripcion, objetivo, categoria, fecha, String.valueOf(uri), idEncargado, context);
+                            if(tipo == 1){
+                                crearProyecto(nombre, descripcion, objetivo, categoria, fecha, String.valueOf(uri), idEncargado, context);
+                            }else{
+                                modificarProyecto(nombre, descripcion, objetivo, categoria, fecha, String.valueOf(uri), idEncargado, nombreProyecto, context);
+                            }
                         }
                     });
                 }
