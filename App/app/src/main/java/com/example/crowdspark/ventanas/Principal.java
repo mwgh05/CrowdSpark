@@ -25,8 +25,8 @@ public class Principal extends AppCompatActivity {
         listview = (ListView) findViewById(R.id.listview);
 
         ArrayList <ProyectCard> proyects = new ArrayList<>();
-        proyects.add(new ProyectCard("drawable://" + R.drawable.logo, "Proyecto 1", "10/09/2024", "Descripcion", "100", "1000"));
-        proyects.add(new ProyectCard("drawable://" + R.drawable.logo, "Proyecto 2", "20/10/2024", "Descripcion", "500", "16000"));
+        proyects.add(new ProyectCard("drawable://" + R.drawable.logo, "Proyecto 1", "10/09/2024", "Descripcion", "100", "1000", "categoria 1"));
+        proyects.add(new ProyectCard("drawable://" + R.drawable.logo, "Proyecto 2", "20/10/2024", "Descripcion", "500", "16000", "categoria 2"));
 
         ProyectCardAdapter adapter = new ProyectCardAdapter(this, R.layout.activity_proyect_card, proyects);
         listview.setAdapter(adapter);

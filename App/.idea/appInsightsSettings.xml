@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.example.crowdspark" />
+                  <option name="mobileSdkAppId" value="1:412589624484:android:d920c90ec6f37b66c9aa31" />
+                  <option name="projectId" value="prueba-13691" />
+                  <option name="projectNumber" value="412589624484" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

@@ -30,6 +30,7 @@ public class DetalleProyectoAdmin extends AppCompatActivity {
         TextView descripcionTextView = findViewById(R.id.descripcion);
         TextView montoTextView = findViewById(R.id.monto);
         TextView objetivoTextView = findViewById(R.id.objetivo);
+        TextView categoriaTextView = findViewById(R.id.categoria);
         ImageView image = findViewById(R.id.image);
 
         Intent intent = getIntent();
@@ -40,6 +41,7 @@ public class DetalleProyectoAdmin extends AppCompatActivity {
                 String descripcion = intent.getStringExtra("descripcion");
                 String monto = intent.getStringExtra("monto");
                 String objetivo = intent.getStringExtra("objetivo");
+                String categoria = intent.getStringExtra("categoria");
                 String imgUrl = intent.getStringExtra("imgUrl");
 
                 nombreTextView.setText(nombre);
@@ -47,6 +49,7 @@ public class DetalleProyectoAdmin extends AppCompatActivity {
                 descripcionTextView.setText(descripcion);
                 montoTextView.setText(monto);
                 objetivoTextView.setText(objetivo);
+                categoriaTextView.setText(categoria);
 
                 ImageLoader imageLoader = ImageLoader.getInstance();
 

@@ -72,6 +72,7 @@ public class ProyectCardAdapterAdmin extends ArrayAdapter<ProyectCard> {
         String descripcion = getItem(position).getDescripcion();
         String monto = getItem(position).getMonto();
         String objetivo = getItem(position).getObjetivo();
+        String categoria = getItem(position).getCategoria();
         String imgUrl = getItem(position).getImgurl();
 
 
@@ -106,6 +107,7 @@ public class ProyectCardAdapterAdmin extends ArrayAdapter<ProyectCard> {
                         intent.putExtra("descripcion", descripcion);
                         intent.putExtra("monto", monto);
                         intent.putExtra("objetivo", objetivo);
+                        intent.putExtra("categoria", categoria);
                         intent.putExtra("imgUrl", imgUrl);
                         mContext.startActivity(intent);
                     }
