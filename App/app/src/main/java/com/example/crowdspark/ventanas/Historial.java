@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ListView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,7 +12,9 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.crowdspark.MainActivity;
 import com.example.crowdspark.R;
+import com.example.crowdspark.control.FireBaseConnection;
 
 public class Historial extends AppCompatActivity {
 
@@ -22,6 +25,11 @@ public class Historial extends AppCompatActivity {
         setContentView(R.layout.activity_historial);
 
         ImageButton botonAtras = findViewById(R.id.back);
+
+        ListView listView = findViewById(R.id.lista);
+
+        FireBaseConnection firebase = new FireBaseConnection();
+        firebase.mostrarDonacionesUsuario(listView, this, MainActivity.getCorreoColaborador());
         botonAtras.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

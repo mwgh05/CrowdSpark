@@ -11,7 +11,11 @@ import androidx.core.view.WindowInsetsCompat;
 
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
+
 import com.example.crowdspark.R;
+import com.example.crowdspark.control.FireBaseConnection;
+import com.google.firebase.Firebase;
 
 public class Estadisticas extends AppCompatActivity {
 
@@ -20,8 +24,12 @@ public class Estadisticas extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_estadisticas);
-
+        TextView usuarios = findViewById(R.id.usuarios);
+        TextView proyectos = findViewById(R.id.proyectos);
+        TextView donaciones = findViewById(R.id.lista);
         ImageButton botonAtras = findViewById(R.id.back);
+        FireBaseConnection firebase = new FireBaseConnection();
+        firebase.estadisticas(this,usuarios,proyectos,donaciones);
         botonAtras.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
