@@ -740,5 +740,58 @@ public class FireBaseConnection {
             desplegarMensaje("Usted no es administrador",context);
         }
     }
+    /*Modifica el usuario*/
+    public void modificarUsuario(String correo, String nombre, String area, String cedula,
+                                 String dinero, String telefono, Context context) {
+        mFirestore.collection("Usuarios")
+                .whereEqualTo("correo", correo)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        QuerySnapshot querySnapshot = task.getResult();
+                        try {
+                            if (!querySnapshot.isEmpty()) {
+                                DocumentSnapshot documentSnapshot = querySnapshot.getDocuments().get(0);
+                                String documentId = documentSnapshot.getId();
+
+                                Map<String, Object> map = new HashMap<>();
+                                if (!nombre.isEmpty()) {
+                                    map.put("nombre", nombre);
+                                }
+                                if (!area.isEmpty()) {
+                                    map.put("area", area);
+                                }
+                                if (!cedula.isEmpty()) {
+                                    map.put("cedula", cedula);
+                                }
+                                if (!dinero.isEmpty()) {
+                                    map.put("dinero", dinero);
+                                }
+                                if (!telefono.isEmpty()) {
+                                    map.put("telefono", telefono);
+                                }
+                                // Actualiza el documento con los nuevos datos
+                                mFirestore.collection("Usuarios").document(documentId)
+                                        .update(map)
+                                        .addOnSuccessListener(aVoid -> {
+                                            desplegarMensaje("Usuario modificado con éxito", context);
+                                            CorreoService correoService = new CorreoService();
+                                            correoService.enviarCorreo(correo, "Datos de usuario modificados", "Sus datos han sido actualizados con éxito", context);
+
+                                        })
+                                        .addOnFailureListener(e -> {
+                                            desplegarMensaje("Error al modificar el usuario: " + e.getMessage(), context);
+                                        });
+                            } else {
+                                desplegarMensaje("No se encontró ningún usuario con ese correo", context);
+                            }
+                        } catch (Exception e) {
+                            desplegarMensaje(e.getMessage(), context);
+                        }
+                    } else {
+                        desplegarMensaje("Error en la consulta: " + task.getException().getMessage(), context);
+                    }
+                });
+    }
 }
 
