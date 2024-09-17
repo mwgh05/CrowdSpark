@@ -7,19 +7,20 @@
     android:padding="16dp"
 
     tools:context=".componentes.DonacionesAdapter">
+
     <TextView
         android:id="@+id/textViewNombreProyecto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#21A8A6"
-        android:text="Nombre Proyecto: " />
+        android:text="Nombre Proyecto: "
+        android:textColor="#21A8A6" />
 
     <TextView
         android:id="@+id/textViewMonto"
-        android:layout_width="58dp"
-        android:textColor="#21A8A6"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Monto" />
+        android:text="Monto:"
+        android:textColor="#21A8A6" />
 
     <TextView
         android:id="@+id/textViewNombreDonante"
@@ -41,4 +42,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Teléfono: " />
+
 </LinearLayout>
