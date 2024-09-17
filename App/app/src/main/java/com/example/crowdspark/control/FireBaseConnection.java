@@ -420,14 +420,15 @@ public class FireBaseConnection {
         });
     };
     /*Muestra los proyectos*/
-    public void mostrarProyecto(ListView listView, Context context, Boolean modo){
+
+    public ArrayList<ProyectCard> mostrarProyecto(ListView listView, Context context, Boolean modo){
+        ArrayList<ProyectCard> proyects = new ArrayList<>();
         mFirestore.collection("Proyecto")
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         // El resultado de la consulta es un objeto QuerySnapshot
                         QuerySnapshot querySnapshot = task.getResult();
-                        ArrayList<ProyectCard> proyects = new ArrayList<>();
                         // Iterar sobre cada documento en QuerySnapshot
                         for (QueryDocumentSnapshot document : querySnapshot) {
                             // Usamos el objeto QueryDocumentSnapshot para acceder a los datos del documento
@@ -453,7 +454,7 @@ public class FireBaseConnection {
                         desplegarMensaje("Error",context);
                     }
                 });
-
+        return proyects;
     }
     /*Muestra todas las donaciones*/
     public void mostrarDonaciones(ListView listView, Context context){
