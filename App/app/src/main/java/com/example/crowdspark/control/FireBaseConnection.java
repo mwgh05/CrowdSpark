@@ -137,25 +137,34 @@ public class FireBaseConnection {
                         // Extrae los valores de "nombre" y "telefono" del documento
                         String nombreDonante = document.getString("nombre");
                         String telefono = document.getString("telefono");
+                        String dinero = document.getString("dinero");
 
-                        // Crea el mapa con los valores para la donación
-                        Map<String, Object> map = new HashMap<>();
-                        map.put("Monto", monto);
-                        map.put("correo", idDonante);
-                        map.put("nombreDonante", nombreDonante);  // Asigna el nombre del donante
-                        map.put("nombreProyecto", nombreProyecto);
-                        map.put("telefono", telefono);  // Asigna el teléfono del donante
+                        if(Integer.parseInt(dinero) >= Integer.parseInt(monto)){
+                            Map<String, Object> map = new HashMap<>();
+                            map.put("Monto", monto);
+                            map.put("correo", idDonante);
+                            map.put("nombreDonante", nombreDonante);  // Asigna el nombre del donante
+                            map.put("nombreProyecto", nombreProyecto);
+                            map.put("telefono", telefono);  // Asigna el teléfono del donante
 
-                        // Agrega la donación a la colección "Proyecto"
-                        mFirestore.collection("Donacion").add(map)
-                                .addOnSuccessListener(documentReference -> {
-                                    desplegarMensaje("Donación registrada con éxito", context);
-                                    Intent intent = new Intent(context, Principal.class);
-                                    context.startActivity(intent);
-                                })
-                                .addOnFailureListener(e -> {
-                                    desplegarMensaje("No se ha podido registrar la donación: " + e.getMessage(), context);
-                                });
+                            actualizarMontoProyecto(monto, nombreProyecto, context);
+                            actualizarMontoUsuario(monto, idDonante, context);
+                            // Agrega la donación a la colección "Proyecto"
+                            mFirestore.collection("Donacion").add(map)
+                                    .addOnSuccessListener(documentReference -> {
+                                        desplegarMensaje("Donación registrada con éxito", context);
+                                        Intent intent = new Intent(context, Principal.class);
+                                        context.startActivity(intent);
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        desplegarMensaje("No se ha podido registrar la donación: " + e.getMessage(), context);
+                                    });
+                        }else{
+                            desplegarMensaje("No posee los fondos necesarios", context);
+                        }
+
+
+
 
                     } else {
                         // Si no se encuentra el usuario, muestra un mensaje de error
@@ -167,7 +176,101 @@ public class FireBaseConnection {
                     desplegarMensaje("Error al buscar el usuario: " + e.getMessage(), context);
                 });
     }
+    public void actualizarMontoProyecto(String monto, String nombreProyecto, Context context) {
+        // Busca el proyecto con el nombre proporcionado
+        mFirestore.collection("Proyecto")
+                .whereEqualTo("Nombre", nombreProyecto)  // Busca por el nombre proporcionado
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        QuerySnapshot querySnapshot = task.getResult();
+                        try{
+                            if (!querySnapshot.isEmpty()) {
+                                // Si se encontró un proyecto con el nombre proporcionado
+                                DocumentSnapshot documentSnapshot = querySnapshot.getDocuments().get(0); // Obtén el primer resultado
+                                String documentId = documentSnapshot.getId(); // Obtiene el ID del documento
+                                String montoActual = documentSnapshot.getString("Monto");
 
+                                String nuevoMonto = String.valueOf(Integer.parseInt(montoActual) + Integer.parseInt(monto));
+
+                                // Crea el mapa con la nueva información
+                                Map<String, Object> map = new HashMap<>();
+                                map.put("Monto", nuevoMonto);
+
+                                // Actualiza el documento con los nuevos datos
+
+                                mFirestore.collection("Proyecto").document(documentId)
+                                        .update(map)
+                                        .addOnSuccessListener(aVoid -> {
+                                            desplegarMensaje("Proyecto modificado con éxito", context);
+                                            Intent intent = new Intent(context, Principal.class);
+                                            context.startActivity(intent);
+                                        })
+                                        .addOnFailureListener(e -> {
+                                            desplegarMensaje("Error al modificar el proyecto: " + e.getMessage(), context);
+                                        });
+
+                            } else {
+                                // Si no se encontró ningún proyecto con ese nombre
+                                desplegarMensaje("No se encontró ningún proyecto con ese nombre", context);
+                            }
+                        } catch ( Exception e){
+                            desplegarMensaje(e.getMessage().toString(), context);
+                        }
+                    } else {
+                        // Si hubo un error al realizar la consulta
+                        desplegarMensaje("Error en la consulta: " + task.getException().getMessage(), context);
+                    }
+                });
+    }
+
+    public void actualizarMontoUsuario(String monto, String idEncargado, Context context) {
+        // Busca el proyecto con el nombre proporcionado
+        mFirestore.collection("Usuarios")
+                .whereEqualTo("correo", idEncargado)  // Busca por el nombre proporcionado
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        QuerySnapshot querySnapshot = task.getResult();
+                        try{
+                            if (!querySnapshot.isEmpty()) {
+                                // Si se encontró un proyecto con el nombre proporcionado
+                                DocumentSnapshot documentSnapshot = querySnapshot.getDocuments().get(0); // Obtén el primer resultado
+                                String documentId = documentSnapshot.getId(); // Obtiene el ID del documento
+                                String montoActual = documentSnapshot.getString("dinero");
+
+                                String nuevoMonto = String.valueOf(Integer.parseInt(montoActual) - Integer.parseInt(monto));
+
+                                // Crea el mapa con la nueva información
+                                Map<String, Object> map = new HashMap<>();
+                                map.put("dinero", nuevoMonto);
+
+                                // Actualiza el documento con los nuevos datos
+
+                                mFirestore.collection("Usuarios").document(documentId)
+                                        .update(map)
+                                        .addOnSuccessListener(aVoid -> {
+                                            desplegarMensaje("Proyecto modificado con éxito", context);
+                                            Intent intent = new Intent(context, Principal.class);
+                                            context.startActivity(intent);
+                                        })
+                                        .addOnFailureListener(e -> {
+                                            desplegarMensaje("Error al modificar el proyecto: " + e.getMessage(), context);
+                                        });
+
+                            } else {
+                                // Si no se encontró ningún proyecto con ese nombre
+                                desplegarMensaje("No se encontró ningún proyecto con ese nombre", context);
+                            }
+                        } catch ( Exception e){
+                            desplegarMensaje(e.getMessage().toString(), context);
+                        }
+                    } else {
+                        // Si hubo un error al realizar la consulta
+                        desplegarMensaje("Error en la consulta: " + task.getException().getMessage(), context);
+                    }
+                });
+    }
     public void modificarProyecto(String nombre, String descripcion, String objetivo, String categoria,
                                   String fecha, String imageURL, String idEncargado, String nombreProyecto, Context context) {
         // Busca el proyecto con el nombre proporcionado
