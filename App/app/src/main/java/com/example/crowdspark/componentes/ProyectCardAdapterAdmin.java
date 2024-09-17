@@ -110,9 +110,9 @@ public class ProyectCardAdapterAdmin extends ArrayAdapter<ProyectCard> {
             }
 
 
-            Animation animation = AnimationUtils.loadAnimation(mContext,
+            /*Animation animation = AnimationUtils.loadAnimation(mContext,
                     (position > lastPosition) ? R.anim.load_down_anim : R.anim.load_up_anim);
-            result.startAnimation(animation);
+            result.startAnimation(animation);*/
             lastPosition = position;
 
             holder.detalle.setOnClickListener(new View.OnClickListener() {
@@ -129,7 +129,7 @@ public class ProyectCardAdapterAdmin extends ArrayAdapter<ProyectCard> {
                     mContext.startActivity(intent);
                 }
             });
-            
+
             holder.nombre.setText(nombre);
             holder.fecha.setText(fecha);
             holder.descripcion.setText(descripcion);
