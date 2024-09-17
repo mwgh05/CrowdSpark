@@ -420,7 +420,6 @@ public class FireBaseConnection {
         });
     };
     /*Muestra los proyectos*/
-
     public ArrayList<ProyectCard> mostrarProyecto(ListView listView, Context context, Boolean modo){
         ArrayList<ProyectCard> proyects = new ArrayList<>();
         mFirestore.collection("Proyecto")
@@ -486,6 +485,7 @@ public class FireBaseConnection {
                         desplegarMensaje("Error",context);
                     }
                 });
+        return proyects;
 
     }
     /*Muestra todas las donaciones de un usuario en especifico*/
