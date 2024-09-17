@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -12,11 +13,14 @@ import androidx.annotation.NonNull;
 
 import com.example.crowdspark.MainActivity;
 import com.example.crowdspark.R;
+import com.example.crowdspark.admin.PrincipalAdmin;
 import com.example.crowdspark.componentes.DonacionesAdapter;
 import com.example.crowdspark.componentes.Donation;
 import com.example.crowdspark.componentes.ProyectCard;
 import com.example.crowdspark.componentes.ProyectCardAdapter;
 import com.example.crowdspark.componentes.ProyectCardAdapterAdmin;
+import com.example.crowdspark.componentes.User;
+import com.example.crowdspark.componentes.UsuarioAdapter;
 import com.example.crowdspark.ventanas.Formulario;
 import com.example.crowdspark.ventanas.Principal;
 import com.example.crowdspark.ventanas.Registrarse;
@@ -24,6 +28,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -47,6 +53,7 @@ import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class FireBaseConnection {
@@ -491,8 +498,6 @@ public class FireBaseConnection {
                         desplegarMensaje("Error",context);
                     }
                 });
-        return proyects;
-
     }
     /*Muestra todas las donaciones de un usuario en especifico*/
     public void mostrarDonacionesUsuario(ListView listView, Context context, String usuario){
@@ -592,4 +597,148 @@ public class FireBaseConnection {
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
     }
+
+    public void mostrarUsuario(Context context, String usuario, TextInputLayout nombreText, EditText cedulaText, EditText correoText, TextInputLayout areaText, EditText dineroText, EditText telefonoText){
+        mFirestore.collection("Usuarios").whereEqualTo("correo", usuario)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        // El resultado de la consulta es un objeto QuerySnapshot
+                        DocumentSnapshot document = task.getResult().getDocuments().get(0);
+
+                        String dinero = document.getString("dinero");
+                        String correo = document.getString("correo");
+                        String nombre = document.getString("nombre");
+                        String telefono = document.getString("telefono");
+                        String cedula = document.getString("cedula");
+                        String area = document.getString("area");
+
+                        nombreText.setHint(nombre);
+                        cedulaText.setHint(cedula);
+                        correoText.setHint(correo);
+                        areaText.setHint(area);
+                        dineroText.setHint(dinero);
+                        telefonoText.setHint(telefono);
+
+                    } else {
+                        desplegarMensaje("Error",context);
+                    }
+                });
+    }
+
+
+
+
+
+    /*Despliega una lista de usuarios*/
+    public void mostrarUsuarios(ListView listView, Context context){
+        mFirestore.collection("Usuarios")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        // El resultado de la consulta es un objeto QuerySnapshot
+                        QuerySnapshot querySnapshot = task.getResult();
+                        List<User> usuarios = new ArrayList<>();
+                        // Iterar sobre cada documento en QuerySnapshot
+                        for (QueryDocumentSnapshot document : querySnapshot) {
+                            // Usamos el objeto QueryDocumentSnapshot para acceder a los datos del documento
+
+                            String nombre = document.getString("nombre");
+                            String correo = document.getString("correo");
+                            String cedula = document.getString("cedula");
+                            String area = document.getString("area");
+                            String estado = document.getString("estado");
+
+                            usuarios.add(new User(nombre, correo, cedula, area, estado));
+                        }
+                        UsuarioAdapter adapter = new UsuarioAdapter(context, usuarios);
+                        listView.setAdapter(adapter);
+
+
+
+                    } else {
+                        desplegarMensaje("Error",context);
+                    }
+                });
+
+    }
+    /*Desactiva */
+    public void activarDesactivarUsuario(Context context, String correo, ListView listView){
+        mFirestore.collection("Usuarios").whereEqualTo("correo", correo)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        // El resultado de la consulta es un objeto QuerySnapshot
+                        QuerySnapshot querySnapshot = task.getResult();
+                        if (querySnapshot.size() == 0){
+                            desplegarMensaje("Usuario no encontrado",context);
+                        }
+                        else {
+                            // Iterar sobre cada documento en QuerySnapshot
+                            DocumentSnapshot documentSnapshot = querySnapshot.getDocuments().get(0); // Obtén el primer resultado
+                            String documentId = documentSnapshot.getId(); // Obtiene el ID del documento
+
+                            // Crea el mapa con la nueva información
+                            Map<String, Object> map = new HashMap<>();
+                            if(documentSnapshot.getString("estado").equals("activo")){
+                                map.put("estado", "inactivo");
+                            }
+                            else{
+                                map.put("estado", "activo");
+                            }
+                            // Actualiza el documento con los nuevos datos
+
+                            mFirestore.collection("Usuarios").document(documentId)
+                                    .update(map)
+                                    .addOnSuccessListener(aVoid -> {
+                                        desplegarMensaje("El estado del usuario ha sido modificado", context);
+                                        mostrarUsuarios(listView, context);
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        desplegarMensaje("Error al modificar el estado del usuario: " + e.getMessage(), context);
+                                    });
+                        }
+                    } else {
+                        desplegarMensaje("Error",context);
+                    }
+                });
+    }
+    /*Verifica que el usuario sea el administrador y la contraseña sea correcta*/
+    public void verificarAdministrador(Context context, String correo, String password){
+        if (correo.equals("crowdspark58@gmail.com")){
+            mFirestore.collection("Usuarios").whereEqualTo("correo", "crowdspark58@gmail.com")
+                    .get()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            // El resultado de la consulta es un objeto QuerySnapshot
+                            QuerySnapshot querySnapshot = task.getResult();
+                            if (querySnapshot.size() == 0){
+                                desplegarMensaje("Usuario no encontrado",context);
+                            }
+                            else {
+                                // Iterar sobre cada documento en QuerySnapshot
+                                for (QueryDocumentSnapshot document : querySnapshot) {
+                                    if (document.getString("estado").equals("inactivo")){
+                                        desplegarMensaje("Usuario inactivo", context);
+                                    }
+                                    else if (document.getString("password").equals(password) && document.getString("estado").equals("activo")) {
+                                        Intent intent = new Intent(context, PrincipalAdmin.class);
+                                        MainActivity.setCorreoColaborador(correo);
+                                        context.startActivity(intent);
+                                    } else {
+                                        desplegarMensaje("Contraseña incorrecta", context);
+                                    }
+                                }
+                            }
+                        } else {
+                            desplegarMensaje("Error",context);
+                        }
+                    });
+
+            }
+        else {
+            desplegarMensaje("Usted no es administrador",context);
+        }
+    }
 }
+

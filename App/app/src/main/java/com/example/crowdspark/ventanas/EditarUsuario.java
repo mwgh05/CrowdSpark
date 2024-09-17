@@ -14,7 +14,9 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.crowdspark.MainActivity;
 import com.example.crowdspark.R;
+import com.example.crowdspark.control.FireBaseConnection;
 import com.google.android.material.textfield.TextInputLayout;
 
 public class EditarUsuario extends AppCompatActivity {
@@ -24,6 +26,19 @@ public class EditarUsuario extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_editar_usuario);
+
+        EditText correoText = findViewById(R.id.editTextTextEmailAddress);
+        EditText cedulaText = findViewById(R.id.editTextNumber2);
+        TextInputLayout nombreText = findViewById(R.id.nombreCompleto2);
+        TextInputLayout areaText = findViewById(R.id.area2);
+        EditText dineroText = findViewById(R.id.editTextNumberDecimal);
+        EditText telefonoText = findViewById(R.id.editTextPhone);
+
+
+        FireBaseConnection firebase = new FireBaseConnection();
+        firebase.mostrarUsuario(this, MainActivity.getCorreoColaborador(), nombreText, cedulaText, correoText, areaText, dineroText, telefonoText);
+
+
 
         ImageButton botonAtras = findViewById(R.id.back);
         botonAtras.setOnClickListener(new View.OnClickListener() {
@@ -37,17 +52,11 @@ public class EditarUsuario extends AppCompatActivity {
         botonEditar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText correoText = findViewById(R.id.editTextTextEmailAddress);
                 String correo = correoText.getText().toString().trim();
-                EditText cedulaText = findViewById(R.id.editTextNumber2);
                 String cedula = cedulaText.getText().toString();
-                TextInputLayout nombreText = findViewById(R.id.nombreCompleto2);
                 String nombre = String.valueOf(nombreText.getEditText().getText());
-                TextInputLayout areaText = findViewById(R.id.area2);
                 String area = String.valueOf(areaText.getEditText().getText());
-                EditText dineroText = findViewById(R.id.editTextNumberDecimal);
                 String dinero = dineroText.getText().toString();
-                EditText telefonoText = findViewById(R.id.editTextPhone);
                 String telefono = telefonoText.getText().toString();
                 EditText passwordText = findViewById(R.id.editTextTextPassword);
                 String password = passwordText.getText().toString();
