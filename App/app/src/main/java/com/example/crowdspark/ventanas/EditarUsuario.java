@@ -27,7 +27,6 @@ public class EditarUsuario extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_editar_usuario);
 
-        EditText correoText = findViewById(R.id.editTextTextEmailAddress);
         EditText cedulaText = findViewById(R.id.editTextNumber2);
         TextInputLayout nombreText = findViewById(R.id.nombreCompleto2);
         TextInputLayout areaText = findViewById(R.id.area2);
@@ -36,7 +35,7 @@ public class EditarUsuario extends AppCompatActivity {
 
 
         FireBaseConnection firebase = new FireBaseConnection();
-        firebase.mostrarUsuario(this, MainActivity.getCorreoColaborador(), nombreText, cedulaText, correoText, areaText, dineroText, telefonoText);
+        firebase.mostrarUsuario(this, MainActivity.getCorreoColaborador(), nombreText, cedulaText, areaText, dineroText, telefonoText);
 
 
 
@@ -52,7 +51,6 @@ public class EditarUsuario extends AppCompatActivity {
         botonEditar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String correo = correoText.getText().toString().trim();
                 String cedula = cedulaText.getText().toString();
                 String nombre = String.valueOf(nombreText.getEditText().getText());
                 String area = String.valueOf(areaText.getEditText().getText());
@@ -63,15 +61,10 @@ public class EditarUsuario extends AppCompatActivity {
                 EditText password2Text = findViewById(R.id.editTextTextPassword2);
                 String password2 = password2Text.getText().toString();
                 String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-               if (correo.length() > 0 && !correo.matches(emailPattern)) {
-                    desplegarMensaje("El correo es inválido");
-                } else if(!password2.equals(password)){
+               if(!password2.equals(password)){
                     desplegarMensaje("Las contraseñas deben ser iguales");
                 } else {
                    boolean cambio = false;
-                   if (correo.length() > 0) {
-                       cambio = true;
-                   }
                    if (cedula.length() > 0) {
                        cambio = true;
                    }
@@ -98,7 +91,6 @@ public class EditarUsuario extends AppCompatActivity {
 
                    if (cambio){
                        desplegarMensaje("Información del usuario modificada");
-                       correoText.setText("");
                        cedulaText.setText("");
                        nombreText.getEditText().setText("");
                        areaText.getEditText().setText("");

@@ -598,7 +598,7 @@ public class FireBaseConnection {
         toast.show();
     }
 
-    public void mostrarUsuario(Context context, String usuario, TextInputLayout nombreText, EditText cedulaText, EditText correoText, TextInputLayout areaText, EditText dineroText, EditText telefonoText){
+    public void mostrarUsuario(Context context, String usuario, TextInputLayout nombreText, EditText cedulaText, TextInputLayout areaText, EditText dineroText, EditText telefonoText){
         mFirestore.collection("Usuarios").whereEqualTo("correo", usuario)
                 .get()
                 .addOnCompleteListener(task -> {
@@ -607,7 +607,6 @@ public class FireBaseConnection {
                         DocumentSnapshot document = task.getResult().getDocuments().get(0);
 
                         String dinero = document.getString("dinero");
-                        String correo = document.getString("correo");
                         String nombre = document.getString("nombre");
                         String telefono = document.getString("telefono");
                         String cedula = document.getString("cedula");
@@ -615,7 +614,6 @@ public class FireBaseConnection {
 
                         nombreText.setHint(nombre);
                         cedulaText.setHint(cedula);
-                        correoText.setHint(correo);
                         areaText.setHint(area);
                         dineroText.setHint(dinero);
                         telefonoText.setHint(telefono);
