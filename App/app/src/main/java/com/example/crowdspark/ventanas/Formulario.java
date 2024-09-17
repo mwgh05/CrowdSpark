@@ -111,9 +111,14 @@ public class Formulario extends AppCompatActivity {
                 String objetivo = objetivoText.getText().toString();
                 TextInputLayout categoriaText = findViewById(R.id.categoriaProyecto);
                 String categoria = String.valueOf(categoriaText.getEditText().getText());
-                desplegarMensaje(MainActivity.getCorreoColaborador());
-                FireBaseConnection firebase = new FireBaseConnection();
-                firebase.subirFoto(1, nombre, descripcion, objetivo, categoria, dateButton.getText().toString(), uri, MainActivity.getCorreoColaborador(), "",v.getContext());
+
+                if(!nombre.isEmpty() && !descripcion.isEmpty() && !objetivo.isEmpty() && !categoria.isEmpty()){
+                    FireBaseConnection firebase = new FireBaseConnection();
+                    firebase.subirFoto(1, nombre, descripcion, objetivo, categoria, dateButton.getText().toString(), uri, MainActivity.getCorreoColaborador(), "",v.getContext());
+                }else {
+                    desplegarMensaje("Debe ingresar todos los datos");
+                }
+
             }
         });
 

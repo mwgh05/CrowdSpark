@@ -101,28 +101,50 @@ public class FireBaseConnection {
     }
 
     public void crearProyecto(String nombre, String descripcion, String objetivo, String categoria,
-                              String fecha, String imageURL, String idEncargado, Context context){
-        Map<String, Object> map = new HashMap<>();
-        map.put("Nombre",nombre);
-        map.put("Descripcion",descripcion);
-        map.put("Objetivo",objetivo);
-        map.put("Categoria",categoria);
-        map.put("Fecha",fecha);
-        map.put("Imagen",imageURL);
-        map.put("idEncargado",idEncargado);
-        map.put("Monto","0");
+                              String fecha, String imageURL, String idEncargado, Context context) {
+        // Primero, consulta si ya existe un proyecto con el mismo nombre
+        mFirestore.collection("Proyecto")
+                .whereEqualTo("Nombre", nombre)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        // Si se encuentra un proyecto con el mismo nombre, muestra un mensaje y no crea el proyecto
+                        if (!task.getResult().isEmpty()) {
+                            desplegarMensaje("Ya existe un proyecto con este nombre", context);
+                        } else {
+                            // Si no existe, procede a crear el proyecto
+                            Map<String, Object> map = new HashMap<>();
+                            map.put("Nombre", nombre);
+                            map.put("Descripcion", descripcion);
+                            map.put("Objetivo", objetivo);
+                            map.put("Categoria", categoria);
+                            map.put("Fecha", fecha);
+                            map.put("Imagen", imageURL);
+                            map.put("idEncargado", idEncargado);
+                            map.put("Monto", "0");
 
-        // Agrega el nuevo proyecto a la colección "Proyecto"
-        mFirestore.collection("Proyecto").add(map)
-                .addOnSuccessListener(documentReference -> {
-                    desplegarMensaje("Proyecto registrado", context);
-                    Intent intent = new Intent(context, Principal.class);
-                    context.startActivity(intent);
+                            // Agrega el nuevo proyecto a la colección "Proyecto"
+                            mFirestore.collection("Proyecto").add(map)
+                                    .addOnSuccessListener(documentReference -> {
+                                        desplegarMensaje("Proyecto registrado", context);
+                                        Intent intent = new Intent(context, Principal.class);
+                                        context.startActivity(intent);
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        desplegarMensaje("No se ha podido registrar el proyecto: " + e.getMessage(), context);
+                                    });
+                        }
+                    } else {
+                        // Si hay un error en la consulta, mostrar un mensaje
+                        desplegarMensaje("Error al verificar el nombre del proyecto: " + task.getException().getMessage(), context);
+                    }
                 })
                 .addOnFailureListener(e -> {
-                    desplegarMensaje("No se ha podido registrar el proyecto: " + e.getMessage(), context);
+                    // Manejo de error en la consulta
+                    desplegarMensaje("Error al consultar los proyectos: " + e.getMessage(), context);
                 });
     }
+
 
     public void donar(String nombreProyecto, String idDonante, String monto, Context context) {
         // Consulta Firestore para obtener el usuario con el idDonante (correo)
@@ -223,7 +245,6 @@ public class FireBaseConnection {
                     }
                 });
     }
-
     public void actualizarMontoUsuario(String monto, String idEncargado, Context context) {
         // Busca el proyecto con el nombre proporcionado
         mFirestore.collection("Usuarios")
@@ -274,7 +295,6 @@ public class FireBaseConnection {
     public void modificarProyecto(String nombre, String descripcion, String objetivo, String categoria,
                                   String fecha, String imageURL, String idEncargado, String nombreProyecto, Context context) {
         // Busca el proyecto con el nombre proporcionado
-        desplegarMensaje("Ha llegado aqui 2",context);
         mFirestore.collection("Proyecto")
                 .whereEqualTo("Nombre", nombreProyecto)  // Busca por el nombre proporcionado
                 .get()
@@ -289,14 +309,27 @@ public class FireBaseConnection {
 
                             // Crea el mapa con la nueva información
                             Map<String, Object> map = new HashMap<>();
-                            map.put("Nombre", nombre);
-                            map.put("Descripcion", descripcion);
-                            map.put("Objetivo", objetivo);
-                            map.put("Categoria", categoria);
-                            map.put("Fecha", fecha);
-                            map.put("Imagen", imageURL);
-                            map.put("idEncargado", idEncargado);
-
+                            if(!nombre.isEmpty()){
+                                map.put("Nombre", nombre);
+                            }
+                            if(!descripcion.isEmpty()){
+                                map.put("Descripcion", descripcion);
+                            }
+                            if(!objetivo.isEmpty()){
+                                map.put("Objetivo", objetivo);
+                            }
+                            if(!categoria.isEmpty()){
+                                map.put("Categoria", categoria);
+                            }
+                            if(!categoria.isEmpty()){
+                                map.put("Fecha", fecha);
+                            }
+                            if(!categoria.isEmpty()){
+                                map.put("Imagen", imageURL);
+                            }
+                            if(!categoria.isEmpty()){
+                                map.put("idEncargado", idEncargado);
+                            }
                             // Actualiza el documento con los nuevos datos
 
                                 mFirestore.collection("Proyecto").document(documentId)
@@ -379,9 +412,6 @@ public class FireBaseConnection {
                     }
                 });
     }
-
-    /*Sube una foto con el nombre del proyecto*/
-
     public void subirFoto(int tipo, String nombre, String descripcion, String objetivo, String categoria,
                           String fecha, Uri uri, String idEncargado, String nombreProyecto, Context context){
         desplegarMensaje("Ha llegado aqui",context);
@@ -446,7 +476,6 @@ public class FireBaseConnection {
                 });
 
     }
-
     /*Despliega un mensaje con un toast*/
     private  void desplegarMensaje(CharSequence text, Context context){
         int duration = Toast.LENGTH_SHORT;

@@ -130,26 +130,31 @@ public class EditarProyecto extends AppCompatActivity {
         });
 
         Button botonSubir = findViewById(R.id.button);
-
         botonSubir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TextInputLayout nombreText = findViewById(R.id.nombreProyecto);
-                String nombre = String.valueOf(nombreText.getEditText().getText());
-                TextInputLayout descripcionText = findViewById(R.id.descripcionProyecto);
-                String descripcion = String.valueOf(descripcionText.getEditText().getText());
+                Object elementos = spinner.getSelectedItem();
+                if(elementos != null && !elementos.toString().isEmpty()){
+                    TextInputLayout nombreText = findViewById(R.id.nombreProyecto);
+                    String nombre = String.valueOf(nombreText.getEditText().getText());
+                    TextInputLayout descripcionText = findViewById(R.id.descripcionProyecto);
+                    String descripcion = String.valueOf(descripcionText.getEditText().getText());
 
-                EditText objetivoText = findViewById(R.id.editTextNumberDecimal);
-                String objetivo = objetivoText.getText().toString();
-                TextInputLayout categoriaText = findViewById(R.id.categoria);
-                String categoria = String.valueOf(categoriaText.getEditText().getText());
-                String elementoSeleccionado = spinner.getSelectedItem().toString();
-                FireBaseConnection firebase = new FireBaseConnection();
-                if (uri != null) {
-                    firebase.subirFoto(0, nombre, descripcion, objetivo, categoria, dateButton.getText().toString(), uri, MainActivity.getCorreoColaborador(), elementoSeleccionado, v.getContext());
-                } else {
-                    firebase.modificarProyecto(nombre, descripcion, objetivo, categoria, dateButton.getText().toString(), "", MainActivity.getCorreoColaborador(), elementoSeleccionado, v.getContext());
+                    String elementoSeleccionado = spinner.getSelectedItem().toString();
 
+                    EditText objetivoText = findViewById(R.id.editTextNumberDecimal);
+                    String objetivo = objetivoText.getText().toString();
+                    TextInputLayout categoriaText = findViewById(R.id.categoria);
+                    String categoria = String.valueOf(categoriaText.getEditText().getText());
+
+                    FireBaseConnection firebase = new FireBaseConnection();
+                    if (uri != null) {
+                        firebase.subirFoto(0, nombre, descripcion, objetivo, categoria, dateButton.getText().toString(), uri, MainActivity.getCorreoColaborador(), elementoSeleccionado, v.getContext());
+                    } else {
+                        firebase.modificarProyecto(nombre, descripcion, objetivo, categoria, dateButton.getText().toString(), "", MainActivity.getCorreoColaborador(), elementoSeleccionado, v.getContext());
+                    }
+                }else {
+                    desplegarMensaje("No posee proyectos para editar");
                 }
             }
 
