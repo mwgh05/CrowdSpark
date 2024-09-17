@@ -92,7 +92,7 @@ public class FireBaseConnection {
                             });
                         }
                         else {
-                          desplegarMensaje("Usuario existente", context);
+                            desplegarMensaje("Usuario existente", context);
 
                         }
                     } else {
@@ -130,6 +130,8 @@ public class FireBaseConnection {
                             mFirestore.collection("Proyecto").add(map)
                                     .addOnSuccessListener(documentReference -> {
                                         desplegarMensaje("Proyecto registrado", context);
+                                        CorreoService correoService = new CorreoService();
+                                        correoService.enviarCorreo(idEncargado,"Proyecto Registrado","Su proyecto, "+nombre+", se ha colocado en CrowdSpark" ,context);
                                         Intent intent = new Intent(context, Principal.class);
                                         context.startActivity(intent);
                                     })
@@ -178,6 +180,8 @@ public class FireBaseConnection {
                             mFirestore.collection("Donacion").add(map)
                                     .addOnSuccessListener(documentReference -> {
                                         desplegarMensaje("Donación registrada con éxito", context);
+                                        CorreoService correoService = new CorreoService();
+                                        correoService.enviarCorreo(idDonante,"Donación exitosa","Su donación de "+monto+" en el proyecto "+nombreProyecto+" se ha realizado con éxito" ,context);
                                         Intent intent = new Intent(context, Principal.class);
                                         context.startActivity(intent);
                                     })
@@ -305,40 +309,42 @@ public class FireBaseConnection {
                     if (task.isSuccessful()) {
                         QuerySnapshot querySnapshot = task.getResult();
                         try{
-                        if (!querySnapshot.isEmpty()) {
-                            // Si se encontró un proyecto con el nombre proporcionado
-                            DocumentSnapshot documentSnapshot = querySnapshot.getDocuments().get(0); // Obtén el primer resultado
-                            String documentId = documentSnapshot.getId(); // Obtiene el ID del documento
+                            if (!querySnapshot.isEmpty()) {
+                                // Si se encontró un proyecto con el nombre proporcionado
+                                DocumentSnapshot documentSnapshot = querySnapshot.getDocuments().get(0); // Obtén el primer resultado
+                                String documentId = documentSnapshot.getId(); // Obtiene el ID del documento
 
-                            // Crea el mapa con la nueva información
-                            Map<String, Object> map = new HashMap<>();
-                            if(!nombre.isEmpty()){
-                                map.put("Nombre", nombre);
-                            }
-                            if(!descripcion.isEmpty()){
-                                map.put("Descripcion", descripcion);
-                            }
-                            if(!objetivo.isEmpty()){
-                                map.put("Objetivo", objetivo);
-                            }
-                            if(!categoria.isEmpty()){
-                                map.put("Categoria", categoria);
-                            }
-                            if(!categoria.isEmpty()){
-                                map.put("Fecha", fecha);
-                            }
-                            if(!categoria.isEmpty()){
-                                map.put("Imagen", imageURL);
-                            }
-                            if(!categoria.isEmpty()){
-                                map.put("idEncargado", idEncargado);
-                            }
-                            // Actualiza el documento con los nuevos datos
+                                // Crea el mapa con la nueva información
+                                Map<String, Object> map = new HashMap<>();
+                                if(!nombre.isEmpty()){
+                                    map.put("Nombre", nombre);
+                                }
+                                if(!descripcion.isEmpty()){
+                                    map.put("Descripcion", descripcion);
+                                }
+                                if(!objetivo.isEmpty()){
+                                    map.put("Objetivo", objetivo);
+                                }
+                                if(!categoria.isEmpty()){
+                                    map.put("Categoria", categoria);
+                                }
+                                if(!categoria.isEmpty()){
+                                    map.put("Fecha", fecha);
+                                }
+                                if(!categoria.isEmpty()){
+                                    map.put("Imagen", imageURL);
+                                }
+                                if(!categoria.isEmpty()){
+                                    map.put("idEncargado", idEncargado);
+                                }
+                                // Actualiza el documento con los nuevos datos
 
                                 mFirestore.collection("Proyecto").document(documentId)
                                         .update(map)
                                         .addOnSuccessListener(aVoid -> {
                                             desplegarMensaje("Proyecto modificado con éxito", context);
+                                            CorreoService correoService = new CorreoService();
+                                            correoService.enviarCorreo(idEncargado,"Proyecto Modificado","Su proyecto, "+nombre+", ha sido modificado" ,context);
                                             Intent intent = new Intent(context, Principal.class);
                                             context.startActivity(intent);
                                         })
@@ -346,10 +352,10 @@ public class FireBaseConnection {
                                             desplegarMensaje("Error al modificar el proyecto: " + e.getMessage(), context);
                                         });
 
-                        } else {
-                            // Si no se encontró ningún proyecto con ese nombre
-                            desplegarMensaje("No se encontró ningún proyecto con ese nombre", context);
-                        }
+                            } else {
+                                // Si no se encontró ningún proyecto con ese nombre
+                                desplegarMensaje("No se encontró ningún proyecto con ese nombre", context);
+                            }
                         } catch ( Exception e){
                             desplegarMensaje(e.getMessage().toString(), context);
                         }
