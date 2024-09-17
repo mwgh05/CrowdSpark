@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +25,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -590,4 +593,33 @@ public class FireBaseConnection {
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
     }
+
+    public void mostrarUsuario(Context context, String usuario, TextInputLayout nombreText, EditText cedulaText, EditText correoText, TextInputLayout areaText, EditText dineroText, EditText telefonoText){
+        mFirestore.collection("Usuarios").whereEqualTo("correo", usuario)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        // El resultado de la consulta es un objeto QuerySnapshot
+                        DocumentSnapshot document = task.getResult().getDocuments().get(0);
+
+                        String dinero = document.getString("dinero");
+                        String correo = document.getString("correo");
+                        String nombre = document.getString("nombre");
+                        String telefono = document.getString("telefono");
+                        String cedula = document.getString("cedula");
+                        String area = document.getString("area");
+
+                        nombreText.setHint(nombre);
+                        cedulaText.setHint(cedula);
+                        correoText.setHint(correo);
+                        areaText.setHint(area);
+                        dineroText.setHint(dinero);
+                        telefonoText.setHint(telefono);
+
+                    } else {
+                        desplegarMensaje("Error",context);
+                    }
+                });
+    }
+
 }
