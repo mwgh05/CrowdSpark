@@ -33,7 +33,7 @@ public class CorreoService {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(context, "Correo enviado", Toast.LENGTH_LONG).show();
+
                         }
                     });
 

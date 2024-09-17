@@ -245,6 +245,8 @@ public class FireBaseConnection {
                                         .addOnFailureListener(e -> {
                                             desplegarMensaje("Error al modificar el proyecto: " + e.getMessage(), context);
                                         });
+                                CorreoService correoService = new CorreoService();
+                                correoService.enviarCorreo(documentSnapshot.getString("idEncargado"),nombreProyecto+" ha recibido una donación","El monto recibido es de "+monto+", lleva recaudado "+nuevoMonto,context);
 
                             } else {
                                 // Si no se encontró ningún proyecto con ese nombre
@@ -623,11 +625,6 @@ public class FireBaseConnection {
                     }
                 });
     }
-
-
-
-
-
     /*Despliega una lista de usuarios*/
     public void mostrarUsuarios(ListView listView, Context context){
         mFirestore.collection("Usuarios")
