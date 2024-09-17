@@ -115,6 +115,7 @@ public class Formulario extends AppCompatActivity {
                 if(!nombre.isEmpty() && !descripcion.isEmpty() && !objetivo.isEmpty() && !categoria.isEmpty()){
                     FireBaseConnection firebase = new FireBaseConnection();
                     firebase.subirFoto(1, nombre, descripcion, objetivo, categoria, dateButton.getText().toString(), uri, MainActivity.getCorreoColaborador(), "",v.getContext());
+
                 }else {
                     desplegarMensaje("Debe ingresar todos los datos");
                 }
