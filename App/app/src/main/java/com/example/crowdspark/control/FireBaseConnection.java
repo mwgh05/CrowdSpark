@@ -491,8 +491,6 @@ public class FireBaseConnection {
                         desplegarMensaje("Error",context);
                     }
                 });
-        return proyects;
-
     }
     /*Muestra todas las donaciones de un usuario en especifico*/
     public void mostrarDonacionesUsuario(ListView listView, Context context, String usuario){
