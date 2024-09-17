@@ -60,7 +60,6 @@ public class EditarUsuario extends AppCompatActivity {
                 String password = passwordText.getText().toString();
                 EditText password2Text = findViewById(R.id.editTextTextPassword2);
                 String password2 = password2Text.getText().toString();
-                String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
                 if (!password2.equals(password)) {
                     desplegarMensaje("Las contraseñas deben ser iguales");
                 } else {
@@ -93,17 +92,7 @@ public class EditarUsuario extends AppCompatActivity {
                         desplegarMensaje("Información del usuario modificada");
                         FireBaseConnection firebase = new FireBaseConnection();
                         firebase.modificarUsuario(MainActivity.getCorreoColaborador(), nombre, area, cedula, dinero, telefono, v.getContext());
-                       /*
-                       correoText.setText("");
-                       cedulaText.setText("");
-                       nombreText.getEditText().setText("");
-                       areaText.getEditText().setText("");
-                       dineroText.setText("");
-                       telefonoText.setText("");
-                       passwordText.setText("");
-                       password2Text.setText("");
 
-                        */
 
                     }
                 }

@@ -16,12 +16,11 @@ public class CorreoService {
     private Handler handler;
 
     public CorreoService() {
-        executorService = Executors.newSingleThreadExecutor(); // Crear un hilo de ejecución
-        handler = new Handler(Looper.getMainLooper()); // Para actualizar la interfaz de usuario
+        executorService = Executors.newSingleThreadExecutor();
+        handler = new Handler(Looper.getMainLooper());
     }
 
     public void enviarCorreo(final String destinatario, final String asunto, final String mensaje, Context context) {
-        // Ejecutar la tarea en un hilo de fondo
         executorService.execute(new Runnable() {
             @Override
             public void run() {
@@ -29,7 +28,6 @@ public class CorreoService {
                     EnviarCorreo sm = new EnviarCorreo();
                     sm.enviar(destinatario, asunto, mensaje);
 
-                    // Si el envío es exitoso, mostrar un Toast en el hilo principal
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
@@ -39,7 +37,6 @@ public class CorreoService {
 
                 } catch (final MessagingException e) {
                     e.printStackTrace();
-                    // Si hay error, también lo manejamos en el hilo principal
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
