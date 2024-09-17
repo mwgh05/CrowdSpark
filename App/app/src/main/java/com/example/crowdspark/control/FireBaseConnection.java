@@ -594,9 +594,9 @@ public class FireBaseConnection {
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
     }
-<<<<<<< Updated upstream
-}
-=======
+
+
+
     /*Despliega una lista de usuarios*/
     public void mostrarUsuarios(ListView listView, Context context){
         mFirestore.collection("Usuarios")
@@ -708,4 +708,4 @@ public class FireBaseConnection {
         }
     }
 }
->>>>>>> Stashed changes
+
