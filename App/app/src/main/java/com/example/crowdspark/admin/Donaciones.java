@@ -30,9 +30,10 @@ public class Donaciones extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_donaciones);
 
-        ListView listView = findViewById(R.id.lista);
+
 
         ImageButton botonAtras = findViewById(R.id.back);
+        ListView listView = findViewById(R.id.lista);
         FireBaseConnection firebase = new FireBaseConnection();
         firebase.mostrarDonaciones(listView, this);
         botonAtras.setOnClickListener(new View.OnClickListener() {
