@@ -14,7 +14,9 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.crowdspark.MainActivity;
 import com.example.crowdspark.R;
+import com.example.crowdspark.control.FireBaseConnection;
 import com.google.android.material.textfield.TextInputLayout;
 
 public class EditarUsuario extends AppCompatActivity {
@@ -24,6 +26,18 @@ public class EditarUsuario extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_editar_usuario);
+
+        EditText cedulaText = findViewById(R.id.editTextNumber2);
+        TextInputLayout nombreText = findViewById(R.id.nombreCompleto2);
+        TextInputLayout areaText = findViewById(R.id.area2);
+        EditText dineroText = findViewById(R.id.editTextNumberDecimal);
+        EditText telefonoText = findViewById(R.id.editTextPhone);
+
+
+        FireBaseConnection firebase = new FireBaseConnection();
+        firebase.mostrarUsuario(this, MainActivity.getCorreoColaborador(), nombreText, cedulaText, areaText, dineroText, telefonoText);
+
+
 
         ImageButton botonAtras = findViewById(R.id.back);
         botonAtras.setOnClickListener(new View.OnClickListener() {
@@ -37,58 +51,49 @@ public class EditarUsuario extends AppCompatActivity {
         botonEditar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText correoText = findViewById(R.id.editTextTextEmailAddress);
-                String correo = correoText.getText().toString().trim();
-                EditText cedulaText = findViewById(R.id.editTextNumber2);
                 String cedula = cedulaText.getText().toString();
-                TextInputLayout nombreText = findViewById(R.id.nombreCompleto2);
                 String nombre = String.valueOf(nombreText.getEditText().getText());
-                TextInputLayout areaText = findViewById(R.id.area2);
                 String area = String.valueOf(areaText.getEditText().getText());
-                EditText dineroText = findViewById(R.id.editTextNumberDecimal);
                 String dinero = dineroText.getText().toString();
-                EditText telefonoText = findViewById(R.id.editTextPhone);
                 String telefono = telefonoText.getText().toString();
                 EditText passwordText = findViewById(R.id.editTextTextPassword);
                 String password = passwordText.getText().toString();
                 EditText password2Text = findViewById(R.id.editTextTextPassword2);
                 String password2 = password2Text.getText().toString();
                 String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-               if (correo.length() > 0 && !correo.matches(emailPattern)) {
-                    desplegarMensaje("El correo es inválido");
-                } else if(!password2.equals(password)){
+                if (!password2.equals(password)) {
                     desplegarMensaje("Las contraseñas deben ser iguales");
                 } else {
-                   boolean cambio = false;
-                   if (correo.length() > 0) {
-                       cambio = true;
-                   }
-                   if (cedula.length() > 0) {
-                       cambio = true;
-                   }
+                    boolean cambio = false;
+                    if (cedula.length() > 0) {
+                        cambio = true;
+                    }
 
-                   if (nombre.length() > 0) {
-                       cambio = true;
-                   }
+                    if (nombre.length() > 0) {
+                        cambio = true;
+                    }
 
-                   if (area.length() > 0) {
-                       cambio = true;
-                   }
+                    if (area.length() > 0) {
+                        cambio = true;
+                    }
 
-                   if (dinero.length() > 0) {
-                       cambio = true;
-                   }
+                    if (dinero.length() > 0) {
+                        cambio = true;
+                    }
 
-                   if (telefono.length() > 0) {
-                       cambio = true;
-                   }
+                    if (telefono.length() > 0) {
+                        cambio = true;
+                    }
 
-                   if (password.length() > 0) {
-                       cambio = true;
-                   }
+                    if (password.length() > 0) {
+                        cambio = true;
+                    }
 
-                   if (cambio){
-                       desplegarMensaje("Información del usuario modificada");
+                    if (cambio) {
+                        desplegarMensaje("Información del usuario modificada");
+                        FireBaseConnection firebase = new FireBaseConnection();
+                        firebase.modificarUsuario(MainActivity.getCorreoColaborador(), nombre, area, cedula, dinero, telefono, v.getContext());
+                       /*
                        correoText.setText("");
                        cedulaText.setText("");
                        nombreText.getEditText().setText("");
@@ -97,9 +102,10 @@ public class EditarUsuario extends AppCompatActivity {
                        telefonoText.setText("");
                        passwordText.setText("");
                        password2Text.setText("");
-                   } else {
-                       desplegarMensaje("No se ha modificado la información del usuario");
-                   }
+
+                        */
+
+                    }
                 }
             }
         });

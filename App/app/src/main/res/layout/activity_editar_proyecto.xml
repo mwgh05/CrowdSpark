@@ -202,6 +202,7 @@
         android:id="@+id/spinner"
         android:layout_width="202dp"
         android:layout_height="48dp"
+        android:textColor="#21A8A6"
         android:layout_marginStart="181dp"
         android:layout_marginTop="200dp"
         android:layout_marginEnd="28dp"

@@ -49,8 +49,13 @@ public class MainActivity extends AppCompatActivity {
         botonAdmin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, PrincipalAdmin.class);
-                startActivity(intent);
+                EditText correoText = findViewById(R.id.editTextTextEmailAddress2);
+                String correo = correoText.getText().toString();
+                EditText passwordText = findViewById(R.id.editTextTextPassword3);
+                String password = passwordText.getText().toString();
+                FireBaseConnection firebase = new FireBaseConnection();
+                firebase.verificarAdministrador(v.getContext(),correo,password);
+                passwordText.setText("");
             }
         });
     }
