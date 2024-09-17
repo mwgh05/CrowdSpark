@@ -16,13 +16,13 @@ import com.example.crowdspark.ventanas.Principal;
 import com.example.crowdspark.ventanas.Registrarse;
 
 public class MainActivity extends AppCompatActivity {
-
+    private static String correoColaborador;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         Button botonRegistrar = findViewById(R.id.button2);
+        correoColaborador = "";
         botonRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,5 +53,12 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+    public static String getCorreoColaborador() {
+        return correoColaborador;
+    }
+
+    public static void setCorreoColaborador(String correoColaborador) {
+        MainActivity.correoColaborador = correoColaborador;
     }
 }

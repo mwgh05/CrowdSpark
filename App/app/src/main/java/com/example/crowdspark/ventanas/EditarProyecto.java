@@ -8,10 +8,13 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -25,17 +28,24 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.bumptech.glide.Glide;
+import com.example.crowdspark.MainActivity;
 import com.example.crowdspark.R;
+import com.example.crowdspark.control.FireBaseConnection;
 import com.google.android.gms.auth.api.signin.internal.Storage;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.Firebase;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 
 public class EditarProyecto extends AppCompatActivity {
     private Uri uri = null;
@@ -50,17 +60,29 @@ public class EditarProyecto extends AppCompatActivity {
         /*Declaración de componentes*/
         imagen = findViewById(R.id.imagenProyecto2);
         dateButton = findViewById(R.id.dateButton);
+        Spinner spinner = findViewById(R.id.spinner);
 
+        List<String> nombresProyectos = new ArrayList<>();
+        FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
 
-        /*
-        // Cargar la imagen usando Glide
-        Glide.with(this)
-                .load(urlImagen)
-                .placeholder(R.drawable.circle) // Imagen temporal mientras carga (opcional)
-                .error(R.drawable.image_failed)            // Imagen de error si falla (opcional)
-                .into(imagen);
+        mFirestore.collection("Proyecto")
+                .whereEqualTo("idEncargado",  MainActivity.getCorreoColaborador())
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (DocumentSnapshot document : task.getResult()) {
+                            // Extrae el campo "Nombre" de cada documento y añádelo a la lista
+                            String nombreProyecto = document.getString("Nombre");
+                            nombresProyectos.add(nombreProyecto);
+                        }
 
-         */
+                        // Configura el adaptador para el Spinner
+                        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, nombresProyectos);
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        spinner.setAdapter(adapter);  // Establece el adaptador al Spinner
+                    }
+                });
+
         /*Petición de permisos*/
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -105,6 +127,37 @@ public class EditarProyecto extends AppCompatActivity {
                 abrirGaleria();
 
             }
+        });
+
+        Button botonSubir = findViewById(R.id.button);
+        botonSubir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Object elementos = spinner.getSelectedItem();
+                if(elementos != null && !elementos.toString().isEmpty()){
+                    TextInputLayout nombreText = findViewById(R.id.nombreProyecto);
+                    String nombre = String.valueOf(nombreText.getEditText().getText());
+                    TextInputLayout descripcionText = findViewById(R.id.descripcionProyecto);
+                    String descripcion = String.valueOf(descripcionText.getEditText().getText());
+
+                    String elementoSeleccionado = spinner.getSelectedItem().toString();
+
+                    EditText objetivoText = findViewById(R.id.editTextNumberDecimal);
+                    String objetivo = objetivoText.getText().toString();
+                    TextInputLayout categoriaText = findViewById(R.id.categoria);
+                    String categoria = String.valueOf(categoriaText.getEditText().getText());
+
+                    FireBaseConnection firebase = new FireBaseConnection();
+                    if (uri != null) {
+                        firebase.subirFoto(0, nombre, descripcion, objetivo, categoria, dateButton.getText().toString(), uri, MainActivity.getCorreoColaborador(), elementoSeleccionado, v.getContext());
+                    } else {
+                        firebase.modificarProyecto(nombre, descripcion, objetivo, categoria, dateButton.getText().toString(), "", MainActivity.getCorreoColaborador(), elementoSeleccionado, v.getContext());
+                    }
+                }else {
+                    desplegarMensaje("No posee proyectos para editar");
+                }
+            }
+
         });
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {

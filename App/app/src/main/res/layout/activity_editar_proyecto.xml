@@ -47,6 +47,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/nombreProyecto"
         android:layout_width="184dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="248dp"
@@ -62,6 +63,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/descripcionProyecto"
         android:layout_width="195dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="308dp"
@@ -169,6 +171,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/categoria"
         android:layout_width="195dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="420dp"

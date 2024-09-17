@@ -28,6 +28,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import android.Manifest;
 import android.content.pm.PackageManager;
+
+import com.example.crowdspark.MainActivity;
 import com.example.crowdspark.R;
 import com.example.crowdspark.control.FireBaseConnection;
 import com.google.android.material.textfield.TextInputLayout;
@@ -104,14 +106,19 @@ public class Formulario extends AppCompatActivity {
                 TextInputLayout nombreText = findViewById(R.id.nombreProyecto);
                 String nombre = String.valueOf(nombreText.getEditText().getText());
                 TextInputLayout descripcionText = findViewById(R.id.descripcionProyecto);
-                String descripcion = String.valueOf(nombreText.getEditText().getText());
+                String descripcion = String.valueOf(descripcionText.getEditText().getText());
                 EditText objetivoText = findViewById(R.id.editTextNumberDecimal);
                 String objetivo = objetivoText.getText().toString();
                 TextInputLayout categoriaText = findViewById(R.id.categoriaProyecto);
-                String categoria = String.valueOf(nombreText.getEditText().getText());
+                String categoria = String.valueOf(categoriaText.getEditText().getText());
 
-                FireBaseConnection firebase = new FireBaseConnection();
-                firebase.crearProyecto(nombre, descripcion, objetivo, categoria, dateButton.getText().toString(), "a", "a", Formulario.this);
+                if(!nombre.isEmpty() && !descripcion.isEmpty() && !objetivo.isEmpty() && !categoria.isEmpty()){
+                    FireBaseConnection firebase = new FireBaseConnection();
+                    firebase.subirFoto(1, nombre, descripcion, objetivo, categoria, dateButton.getText().toString(), uri, MainActivity.getCorreoColaborador(), "",v.getContext());
+                }else {
+                    desplegarMensaje("Debe ingresar todos los datos");
+                }
+
             }
         });
 
