@@ -76,7 +76,7 @@ public class Registrarse extends AppCompatActivity {
                 String password = passwordText.getText().toString();
                 EditText password2Text = findViewById(R.id.editTextTextPassword2);
                 String password2 = password2Text.getText().toString();
-                String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+                String emailPattern = "^[a-zA-Z0-9._%+-]+@(itcr\\.ac\\.cr|estudiantec\\.cr)$";
                 if (correo.length() == 0 || cedula.length() == 0 || nombre.length() == 0 ||
                         area.length() == 0 || dinero.length() == 0 || telefono.length() == 0 ||
                         password.length() == 0 || password2.length() == 0)  {

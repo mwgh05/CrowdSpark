@@ -61,36 +61,40 @@ public class EditarUsuario extends AppCompatActivity {
                 EditText password2Text = findViewById(R.id.editTextTextPassword2);
                 String password2 = password2Text.getText().toString();
                 String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-               if(!password2.equals(password)){
+                if (!password2.equals(password)) {
                     desplegarMensaje("Las contraseñas deben ser iguales");
                 } else {
-                   boolean cambio = false;
-                   if (cedula.length() > 0) {
-                       cambio = true;
-                   }
+                    boolean cambio = false;
+                    if (cedula.length() > 0) {
+                        cambio = true;
+                    }
 
-                   if (nombre.length() > 0) {
-                       cambio = true;
-                   }
+                    if (nombre.length() > 0) {
+                        cambio = true;
+                    }
 
-                   if (area.length() > 0) {
-                       cambio = true;
-                   }
+                    if (area.length() > 0) {
+                        cambio = true;
+                    }
 
-                   if (dinero.length() > 0) {
-                       cambio = true;
-                   }
+                    if (dinero.length() > 0) {
+                        cambio = true;
+                    }
 
-                   if (telefono.length() > 0) {
-                       cambio = true;
-                   }
+                    if (telefono.length() > 0) {
+                        cambio = true;
+                    }
 
-                   if (password.length() > 0) {
-                       cambio = true;
-                   }
+                    if (password.length() > 0) {
+                        cambio = true;
+                    }
 
-                   if (cambio){
-                       desplegarMensaje("Información del usuario modificada");
+                    if (cambio) {
+                        desplegarMensaje("Información del usuario modificada");
+                        FireBaseConnection firebase = new FireBaseConnection();
+                        firebase.modificarUsuario(MainActivity.getCorreoColaborador(), nombre, area, cedula, dinero, telefono, v.getContext());
+                       /*
+                       correoText.setText("");
                        cedulaText.setText("");
                        nombreText.getEditText().setText("");
                        areaText.getEditText().setText("");
@@ -98,9 +102,10 @@ public class EditarUsuario extends AppCompatActivity {
                        telefonoText.setText("");
                        passwordText.setText("");
                        password2Text.setText("");
-                   } else {
-                       desplegarMensaje("No se ha modificado la información del usuario");
-                   }
+
+                        */
+
+                    }
                 }
             }
         });
