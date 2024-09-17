@@ -98,20 +98,7 @@ public class ProyectCardAdapterAdmin extends ArrayAdapter<ProyectCard> {
                 holder.image = (ImageView) convertView.findViewById(R.id.image);
                 holder.detalle = (Button) convertView.findViewById(R.id.detalle);
 
-                holder.detalle.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(mContext, DetalleProyectoAdmin.class);
-                        intent.putExtra("nombre", nombre);
-                        intent.putExtra("fecha", fecha);
-                        intent.putExtra("descripcion", descripcion);
-                        intent.putExtra("monto", monto);
-                        intent.putExtra("objetivo", objetivo);
-                        intent.putExtra("categoria", categoria);
-                        intent.putExtra("imgUrl", imgUrl);
-                        mContext.startActivity(intent);
-                    }
-                });
+
 
                 result = convertView;
 
@@ -128,6 +115,21 @@ public class ProyectCardAdapterAdmin extends ArrayAdapter<ProyectCard> {
             result.startAnimation(animation);
             lastPosition = position;
 
+            holder.detalle.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext, DetalleProyectoAdmin.class);
+                    intent.putExtra("nombre", nombre);
+                    intent.putExtra("fecha", fecha);
+                    intent.putExtra("descripcion", descripcion);
+                    intent.putExtra("monto", monto);
+                    intent.putExtra("objetivo", objetivo);
+                    intent.putExtra("categoria", categoria);
+                    intent.putExtra("imgUrl", imgUrl);
+                    mContext.startActivity(intent);
+                }
+            });
+            
             holder.nombre.setText(nombre);
             holder.fecha.setText(fecha);
             holder.descripcion.setText(descripcion);
