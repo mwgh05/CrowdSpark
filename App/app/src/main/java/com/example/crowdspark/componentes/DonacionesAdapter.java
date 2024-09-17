@@ -26,18 +26,18 @@ public class DonacionesAdapter extends ArrayAdapter<Donation> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        // Obtener los datos de la donación para este elemento
+
         String monto = getItem(position).getMonto();
         String correo = getItem(position).getCorreo();
         String nombreDonante = getItem(position).getNombreDonante();
         String nombreProyecto = getItem(position).getNombreProyecto();
         String telefono = getItem(position).getTelefono();
 
-        // Inflar el diseño personalizado
+
         LayoutInflater inflater = LayoutInflater.from(mContext);
         convertView = inflater.inflate(mResource, parent, false);
 
-        // Referencias a los TextViews
+
         TextView textViewMonto = convertView.findViewById(R.id.textViewMonto);
         TextView textViewCorreo = convertView.findViewById(R.id.textViewCorreo);
         TextView textViewNombreDonante = convertView.findViewById(R.id.textViewNombreDonante);

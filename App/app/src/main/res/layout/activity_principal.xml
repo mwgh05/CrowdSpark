@@ -22,11 +22,10 @@
         android:id="@+id/divider"
         android:layout_width="1dp"
         android:layout_height="match_parent"
-        android:layout_marginStart="156dp"
         android:layout_marginTop="1dp"
         android:background="#015788"
         android:backgroundTint="#015788"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/editarusuario"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
@@ -47,9 +46,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="216dp"
+        android:layout_marginEnd="254dp"
         android:backgroundTint="@android:color/transparent"
         android:text="Editar Proyecto"
         android:textColor="#595959"
+        app:layout_constraintEnd_toEndOf="@+id/linearLayout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -62,6 +63,7 @@
         android:backgroundTint="@android:color/transparent"
         android:text="Historial"
         android:textColor="#595959"
+        app:layout_constraintEnd_toEndOf="@+id/crearproyecto"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -81,6 +83,7 @@
 
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginEnd="1dp"
@@ -117,7 +120,7 @@
             android:layout_height="48dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:foregroundTint="#595959" />
+            android:foregroundTint="#21A8A6" />
 
         <ListView
             android:id="@+id/listview"

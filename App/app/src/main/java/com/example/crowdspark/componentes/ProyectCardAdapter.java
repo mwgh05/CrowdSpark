@@ -45,12 +45,7 @@ public class ProyectCardAdapter extends ArrayAdapter<ProyectCard> {
         Button detalle;
     }
 
-    /**
-     * Default constructor for the PersonListAdapter
-     * @param context
-     * @param resource
-     * @param objects
-     */
+
     public ProyectCardAdapter(Context context, int resource, ArrayList<ProyectCard> objects) {
         super(context, resource, objects);
         mContext = context;
@@ -105,10 +100,7 @@ public class ProyectCardAdapter extends ArrayAdapter<ProyectCard> {
             }
 
 
-            /*Animation animation = AnimationUtils.loadAnimation(mContext,
-                    (position > lastPosition) ? R.anim.load_down_anim : R.anim.load_up_anim);
-            result.startAnimation(animation);
-            lastPosition = position;*/
+
 
             holder.detalle.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -34,9 +34,7 @@ public class ProyectCardAdapterAdmin extends ArrayAdapter<ProyectCard> {
     private int mResource;
     private int lastPosition = -1;
 
-    /**
-     * Holds variables in a View
-     */
+
     private static class ViewHolder {
         TextView nombre;
         TextView fecha;
@@ -47,12 +45,7 @@ public class ProyectCardAdapterAdmin extends ArrayAdapter<ProyectCard> {
         Button detalle;
     }
 
-    /**
-     * Default constructor for the PersonListAdapter
-     * @param context
-     * @param resource
-     * @param objects
-     */
+
     public ProyectCardAdapterAdmin(Context context, int resource, ArrayList<ProyectCard> objects) {
         super(context, resource, objects);
         mContext = context;
@@ -110,9 +103,6 @@ public class ProyectCardAdapterAdmin extends ArrayAdapter<ProyectCard> {
             }
 
 
-            /*Animation animation = AnimationUtils.loadAnimation(mContext,
-                    (position > lastPosition) ? R.anim.load_down_anim : R.anim.load_up_anim);
-            result.startAnimation(animation);*/
             lastPosition = position;
 
             holder.detalle.setOnClickListener(new View.OnClickListener() {
@@ -136,19 +126,19 @@ public class ProyectCardAdapterAdmin extends ArrayAdapter<ProyectCard> {
             holder.monto.setText(monto);
             holder.objetivo.setText(objetivo);
 
-            //create the imageloader object
+
             ImageLoader imageLoader = ImageLoader.getInstance();
 
             int defaultImage = mContext.getResources().getIdentifier("@drawable/image_failed",null,mContext.getPackageName());
 
-            //create display options
+
             DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true)
                     .cacheOnDisc(true).resetViewBeforeLoading(true)
                     .showImageForEmptyUri(defaultImage)
                     .showImageOnFail(defaultImage)
                     .showImageOnLoading(defaultImage).build();
 
-            //download and display image from url
+
             imageLoader.displayImage(imgUrl, holder.image, options);
 
             return convertView;
@@ -159,11 +149,9 @@ public class ProyectCardAdapterAdmin extends ArrayAdapter<ProyectCard> {
 
     }
 
-    /**
-     * Required for setting up the Universal Image loader Library
-     */
+
     private void setupImageLoader(){
-        // UNIVERSAL IMAGE LOADER SETUP
+
         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
                 .cacheOnDisc(true).cacheInMemory(true)
                 .imageScaleType(ImageScaleType.EXACTLY)
@@ -176,6 +164,6 @@ public class ProyectCardAdapterAdmin extends ArrayAdapter<ProyectCard> {
                 .discCacheSize(100 * 1024 * 1024).build();
 
         ImageLoader.getInstance().init(config);
-        // END - UNIVERSAL IMAGE LOADER SETUP
+
     }
 }

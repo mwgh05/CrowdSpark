@@ -59,7 +59,6 @@ import java.util.Map;
 public class FireBaseConnection {
     private FirebaseFirestore mFirestore;
     private static final String TAG = "FirestoreExample";
-    private boolean b;
     public FireBaseConnection() {
         this.mFirestore = FirebaseFirestore.getInstance();
     }
@@ -109,7 +108,7 @@ public class FireBaseConnection {
 
 
     }
-
+    /*Crea un proyecto, el nombre no puede repetirse*/
     public void crearProyecto(String nombre, String descripcion, String objetivo, String categoria,
                               String fecha, String imageURL, String idEncargado, Context context) {
         // Primero, consulta si ya existe un proyecto con el mismo nombre
@@ -157,7 +156,7 @@ public class FireBaseConnection {
                 });
     }
 
-
+    /*Dona a un proyecto si el usuario posee la cantidad, de lo contrario no realiza la donacion*/
     public void donar(String nombreProyecto, String idDonante, String monto, Context context) {
         // Consulta Firestore para obtener el usuario con el idDonante (correo)
         mFirestore.collection("Usuarios")
@@ -212,6 +211,7 @@ public class FireBaseConnection {
                     desplegarMensaje("Error al buscar el usuario: " + e.getMessage(), context);
                 });
     }
+    /*Actualiza el monto de dinero recaudado por el proyecto*/
     public void actualizarMontoProyecto(String monto, String nombreProyecto, Context context) {
         // Busca el proyecto con el nombre proporcionado
         mFirestore.collection("Proyecto")
@@ -245,6 +245,8 @@ public class FireBaseConnection {
                                         .addOnFailureListener(e -> {
                                             desplegarMensaje("Error al modificar el proyecto: " + e.getMessage(), context);
                                         });
+                                CorreoService correoService = new CorreoService();
+                                correoService.enviarCorreo(documentSnapshot.getString("idEncargado"),nombreProyecto+" ha recibido una donación","El monto recibido es de "+monto+", lleva recaudado "+nuevoMonto,context);
 
                             } else {
                                 // Si no se encontró ningún proyecto con ese nombre
@@ -259,6 +261,7 @@ public class FireBaseConnection {
                     }
                 });
     }
+    /*Actualiza el monto de dinero que tiene el usuario*/
     public void actualizarMontoUsuario(String monto, String idEncargado, Context context) {
         // Busca el proyecto con el nombre proporcionado
         mFirestore.collection("Usuarios")
@@ -306,6 +309,7 @@ public class FireBaseConnection {
                     }
                 });
     }
+    /*Modifica el proyecto*/
     public void modificarProyecto(String nombre, String descripcion, String objetivo, String categoria,
                                   String fecha, String imageURL, String idEncargado, String nombreProyecto, Context context) {
         // Busca el proyecto con el nombre proporcionado
@@ -439,18 +443,15 @@ public class FireBaseConnection {
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        // El resultado de la consulta es un objeto QuerySnapshot
                         QuerySnapshot querySnapshot = task.getResult();
-                        // Iterar sobre cada documento en QuerySnapshot
                         for (QueryDocumentSnapshot document : querySnapshot) {
-                            // Usamos el objeto QueryDocumentSnapshot para acceder a los datos del documento
-                            String categoria = document.getString("Categoria"); // Obtener el ID del documento
-                            String descripcion = document.getString("Descripcion"); // Obtener el campo "nombre"
-                            String fecha = document.getString("Fecha"); // Obtener el campo "correo"
-                            String imagen = document.getString("Imagen"); // Obtener el ID del documento
-                            String nombre = document.getString("Nombre"); // Obtener el campo "nombre"
-                            String objetivo = document.getString("Objetivo"); // Obtener el campo "correo"
-                            String monto = document.getString("Monto"); // Obtener el campo "correo"
+                            String categoria = document.getString("Categoria");
+                            String descripcion = document.getString("Descripcion");
+                            String fecha = document.getString("Fecha");
+                            String imagen = document.getString("Imagen");
+                            String nombre = document.getString("Nombre");
+                            String objetivo = document.getString("Objetivo");
+                            String monto = document.getString("Monto");
                             proyects.add(new ProyectCard(imagen, nombre, fecha, descripcion, monto, objetivo, categoria));
                         }
                         if(modo){
@@ -474,18 +475,15 @@ public class FireBaseConnection {
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        // El resultado de la consulta es un objeto QuerySnapshot
-                        QuerySnapshot querySnapshot = task.getResult();
+                          QuerySnapshot querySnapshot = task.getResult();
                         ArrayList<Donation> listaDonaciones = new ArrayList<>();
-                        // Iterar sobre cada documento en QuerySnapshot
                         for (QueryDocumentSnapshot document : querySnapshot) {
-                            // Usamos el objeto QueryDocumentSnapshot para acceder a los datos del documento
 
-                            String monto = document.getString("Monto"); // Obtener el campo "correo"
-                            String correo = document.getString("correo"); // Obtener el campo "correo"
-                            String nombreDonante = document.getString("nombreDonante"); // Obtener el campo "correo"
-                            String nombreProyecto = document.getString("nombreProyecto"); // Obtener el campo "correo"
-                            String telefono = document.getString("telefono"); // Obtener el campo "correo"
+                            String monto = document.getString("Monto");
+                            String correo = document.getString("correo");
+                            String nombreDonante = document.getString("nombreDonante");
+                            String nombreProyecto = document.getString("nombreProyecto");
+                            String telefono = document.getString("telefono");
 
                             listaDonaciones.add(new Donation(monto, correo, nombreDonante, nombreProyecto, telefono));
                         }
@@ -505,18 +503,16 @@ public class FireBaseConnection {
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        // El resultado de la consulta es un objeto QuerySnapshot
                         QuerySnapshot querySnapshot = task.getResult();
                         ArrayList<Donation> listaDonaciones = new ArrayList<>();
-                        // Iterar sobre cada documento en QuerySnapshot
-                        for (QueryDocumentSnapshot document : querySnapshot) {
-                            // Usamos el objeto QueryDocumentSnapshot para acceder a los datos del documento
 
-                            String monto = document.getString("Monto"); // Obtener el campo "correo"
-                            String correo = document.getString("correo"); // Obtener el campo "correo"
-                            String nombreDonante = document.getString("nombreDonante"); // Obtener el campo "correo"
-                            String nombreProyecto = document.getString("nombreProyecto"); // Obtener el campo "correo"
-                            String telefono = document.getString("telefono"); // Obtener el campo "correo"
+                        for (QueryDocumentSnapshot document : querySnapshot) {
+
+                            String monto = document.getString("Monto");
+                            String correo = document.getString("correo");
+                            String nombreDonante = document.getString("nombreDonante");
+                            String nombreProyecto = document.getString("nombreProyecto");
+                            String telefono = document.getString("telefono");
                             listaDonaciones.add(new Donation(monto, correo, nombreDonante, nombreProyecto, telefono));
                         }
                         DonacionesAdapter adapter = new DonacionesAdapter(context, R.layout.elemento, listaDonaciones);
@@ -561,7 +557,6 @@ public class FireBaseConnection {
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        // El resultado de la consulta es un objeto QuerySnapshot
                         QuerySnapshot querySnapshot = task.getResult();
                         Usuarios.setText(querySnapshot.size()+"");
                     } else {
@@ -572,7 +567,6 @@ public class FireBaseConnection {
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        // El resultado de la consulta es un objeto QuerySnapshot
                         QuerySnapshot querySnapshot = task.getResult();
                         Donaciones.setText(querySnapshot.size()+"");
                     } else {
@@ -583,7 +577,6 @@ public class FireBaseConnection {
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        // El resultado de la consulta es un objeto QuerySnapshot
                         QuerySnapshot querySnapshot = task.getResult();
                         Proyectos.setText(querySnapshot.size()+"");
                     } else {
@@ -598,7 +591,7 @@ public class FireBaseConnection {
         toast.show();
     }
 
-    public void mostrarUsuario(Context context, String usuario, TextInputLayout nombreText, EditText cedulaText, EditText correoText, TextInputLayout areaText, EditText dineroText, EditText telefonoText){
+    public void mostrarUsuario(Context context, String usuario, TextInputLayout nombreText, EditText cedulaText, TextInputLayout areaText, EditText dineroText, EditText telefonoText){
         mFirestore.collection("Usuarios").whereEqualTo("correo", usuario)
                 .get()
                 .addOnCompleteListener(task -> {
@@ -607,7 +600,6 @@ public class FireBaseConnection {
                         DocumentSnapshot document = task.getResult().getDocuments().get(0);
 
                         String dinero = document.getString("dinero");
-                        String correo = document.getString("correo");
                         String nombre = document.getString("nombre");
                         String telefono = document.getString("telefono");
                         String cedula = document.getString("cedula");
@@ -615,7 +607,6 @@ public class FireBaseConnection {
 
                         nombreText.setHint(nombre);
                         cedulaText.setHint(cedula);
-                        correoText.setHint(correo);
                         areaText.setHint(area);
                         dineroText.setHint(dinero);
                         telefonoText.setHint(telefono);
@@ -625,23 +616,16 @@ public class FireBaseConnection {
                     }
                 });
     }
-
-
-
-
-
     /*Despliega una lista de usuarios*/
     public void mostrarUsuarios(ListView listView, Context context){
         mFirestore.collection("Usuarios")
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        // El resultado de la consulta es un objeto QuerySnapshot
                         QuerySnapshot querySnapshot = task.getResult();
                         List<User> usuarios = new ArrayList<>();
-                        // Iterar sobre cada documento en QuerySnapshot
+
                         for (QueryDocumentSnapshot document : querySnapshot) {
-                            // Usamos el objeto QueryDocumentSnapshot para acceder a los datos del documento
 
                             String nombre = document.getString("nombre");
                             String correo = document.getString("correo");
@@ -668,13 +652,11 @@ public class FireBaseConnection {
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        // El resultado de la consulta es un objeto QuerySnapshot
                         QuerySnapshot querySnapshot = task.getResult();
                         if (querySnapshot.size() == 0){
                             desplegarMensaje("Usuario no encontrado",context);
                         }
                         else {
-                            // Iterar sobre cada documento en QuerySnapshot
                             DocumentSnapshot documentSnapshot = querySnapshot.getDocuments().get(0); // Obtén el primer resultado
                             String documentId = documentSnapshot.getId(); // Obtiene el ID del documento
 
@@ -710,13 +692,13 @@ public class FireBaseConnection {
                     .get()
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
-                            // El resultado de la consulta es un objeto QuerySnapshot
+
                             QuerySnapshot querySnapshot = task.getResult();
                             if (querySnapshot.size() == 0){
                                 desplegarMensaje("Usuario no encontrado",context);
                             }
                             else {
-                                // Iterar sobre cada documento en QuerySnapshot
+
                                 for (QueryDocumentSnapshot document : querySnapshot) {
                                     if (document.getString("estado").equals("inactivo")){
                                         desplegarMensaje("Usuario inactivo", context);
@@ -739,6 +721,59 @@ public class FireBaseConnection {
         else {
             desplegarMensaje("Usted no es administrador",context);
         }
+    }
+    /*Modifica el usuario*/
+    public void modificarUsuario(String correo, String nombre, String area, String cedula,
+                                 String dinero, String telefono, Context context) {
+        mFirestore.collection("Usuarios")
+                .whereEqualTo("correo", correo)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        QuerySnapshot querySnapshot = task.getResult();
+                        try {
+                            if (!querySnapshot.isEmpty()) {
+                                DocumentSnapshot documentSnapshot = querySnapshot.getDocuments().get(0);
+                                String documentId = documentSnapshot.getId();
+
+                                Map<String, Object> map = new HashMap<>();
+                                if (!nombre.isEmpty()) {
+                                    map.put("nombre", nombre);
+                                }
+                                if (!area.isEmpty()) {
+                                    map.put("area", area);
+                                }
+                                if (!cedula.isEmpty()) {
+                                    map.put("cedula", cedula);
+                                }
+                                if (!dinero.isEmpty()) {
+                                    map.put("dinero", dinero);
+                                }
+                                if (!telefono.isEmpty()) {
+                                    map.put("telefono", telefono);
+                                }
+                                // Actualiza el documento con los nuevos datos
+                                mFirestore.collection("Usuarios").document(documentId)
+                                        .update(map)
+                                        .addOnSuccessListener(aVoid -> {
+                                            desplegarMensaje("Usuario modificado con éxito", context);
+                                            CorreoService correoService = new CorreoService();
+                                            correoService.enviarCorreo(correo, "Datos de usuario modificados", "Sus datos han sido actualizados con éxito", context);
+
+                                        })
+                                        .addOnFailureListener(e -> {
+                                            desplegarMensaje("Error al modificar el usuario: " + e.getMessage(), context);
+                                        });
+                            } else {
+                                desplegarMensaje("No se encontró ningún usuario con ese correo", context);
+                            }
+                        } catch (Exception e) {
+                            desplegarMensaje(e.getMessage(), context);
+                        }
+                    } else {
+                        desplegarMensaje("Error en la consulta: " + task.getException().getMessage(), context);
+                    }
+                });
     }
 }
 

@@ -33,17 +33,17 @@ public class UsuarioAdapter extends ArrayAdapter<User> {
             convertView = inflater.inflate(R.layout.usuario, parent, false);
         }
 
-        // Obtener los TextView del layout
+
         TextView textViewNombreUsuario = convertView.findViewById(R.id.textViewUsuario);
         TextView textViewCorreo = convertView.findViewById(R.id.textViewCorreo);
         TextView textViewCedula = convertView.findViewById(R.id.textViewCedula);
         TextView textViewArea = convertView.findViewById(R.id.textViewArea);
         TextView textViewEstado = convertView.findViewById(R.id.textViewEstado);
 
-        // Obtener el usuario actual
+
         User usuario = usuarios.get(position);
 
-        // Setear los valores
+
         textViewNombreUsuario.setText("Usuario: " + usuario.getNombre());
         textViewCorreo.setText("Correo: " + usuario.getCorreo());
         textViewCedula.setText("Cédula: " + usuario.getCedula());
